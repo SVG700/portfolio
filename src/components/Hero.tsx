@@ -2,6 +2,7 @@ import { profile } from '../data/profile'
 import { Magnetic } from '../motion'
 import { ArrowDown, GitHubIcon, LinkedInIcon, Mail } from './icons'
 import { ResumeButton } from './ResumeButton'
+import { Portrait } from './Portrait'
 import { WorkCollage } from './WorkCollage'
 
 const LINES = [
@@ -43,12 +44,18 @@ export function Hero() {
 
         <div className="mt-10 grid gap-12 md:mt-14 lg:grid-cols-12 lg:gap-10">
           <div className="enter flex flex-col lg:col-span-5" style={{ animationDelay: '380ms' }}>
-            <p className="lede max-w-md text-ink/85">{profile.summary}</p>
+            <div className="flex items-center gap-5">
+              <Portrait className="w-[104px] md:w-32" />
+              <p className="flex flex-col gap-1">
+                <span className="inline-flex items-center gap-2 text-[15px] font-medium leading-snug">
+                  <span className="size-1.5 shrink-0 rounded-full bg-accent" aria-hidden="true" />
+                  {profile.currentRole.split(' · ')[0]}
+                </span>
+                <span className="meta pl-3.5">{profile.currentRole.split(' · ')[1]}</span>
+              </p>
+            </div>
 
-            <p className="mt-6 inline-flex items-center gap-2.5 self-start rounded-full border border-line-strong px-3.5 py-1.5 text-[13.5px]">
-              <span className="size-1.5 rounded-full bg-accent" aria-hidden="true" />
-              {profile.currentRole}
-            </p>
+            <p className="lede mt-7 max-w-md text-ink/85">{profile.summary}</p>
 
             <div className="mt-8 flex flex-wrap gap-3">
               <Magnetic>
