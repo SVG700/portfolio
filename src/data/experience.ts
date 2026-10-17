@@ -22,9 +22,9 @@ export const roles: Role[] = [
     detail: 'Led sponsor relations for the university’s international tech fest (5,000+ participants); brought in five sponsors.',
   },
   {
-    title: 'Campus Ambassador — Marketing Internship',
+    title: 'Marketing Intern — Campus Ambassador Program',
     organisation: 'Shaastra 2025–26, IIT Madras',
-    period: 'Offer Dec 2025',
+    period: 'Dec 2025 – Mar 2026',
   },
   {
     title: 'Campus Ambassador',

@@ -34,7 +34,7 @@ Optional fields that are left out simply don't render, so there are no empty pla
 
 Put the PDF at **`public/resume.pdf`**. It is served at `/resume.pdf`.
 
-The "View Resume" / "Download Resume" buttons check that a real PDF is served at that path. Until the file exists, they show a disabled "Resume coming soon" state rather than a broken link.
+The resume is generated from `resume/resume.html` with `npm run resume` (output: `resume/Samhith_V_Gupta_Resume.pdf`, gitignored). Review it, then copy it to `public/resume.pdf` to publish. The Resume buttons only render when a real PDF is served at that path, and are hidden inside the Android app (its WebView cannot display PDFs).
 
 ## Adding links later
 

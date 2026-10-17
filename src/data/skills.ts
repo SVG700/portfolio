@@ -35,12 +35,26 @@ export const skillGroups: SkillGroup[] = [
   },
   {
     title: 'Mobile & Web3',
-    skills: [{ name: 'Android Studio' }, { name: 'Firebase' }, { name: 'Algorand' }],
+    skills: [
+      { name: 'Android Studio' },
+      { name: 'Android SDK' },
+      { name: 'Firebase' },
+      { name: 'Firebase Realtime Database' },
+      { name: 'Algorand' },
+    ],
     evidence: ['owaste', 'payperview'],
   },
   {
     title: 'Tools',
-    skills: [{ name: 'Git' }, { name: 'GitHub' }, { name: 'Vercel' }, { name: 'VS Code' }],
+    skills: [
+      { name: 'Git' },
+      { name: 'GitHub' },
+      { name: 'Vercel' },
+      { name: 'VS Code' },
+      { name: 'GitHub Copilot' },
+      { name: 'PowerShell' },
+      { name: 'Canva' },
+    ],
     evidence: [],
   },
 ]
