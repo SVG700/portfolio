@@ -43,6 +43,26 @@ The "View Resume" / "Download Resume" buttons check that a real PDF is served at
 - **Availability badge:** set `openToInternships: true` in `profile.ts` (off by default).
 - **Profile photo (optional):** not used by the current design. If wanted, add it to `public/` and render it in `src/components/Hero.tsx`.
 
+## Android app
+
+The same site, packaged with [Capacitor](https://capacitorjs.com) into an Android app (`dev.samhith.portfolio`). The built site is bundled inside the APK, so the app works offline. Content still comes from `src/data/` — there is one codebase.
+
+```bash
+npm run apk            # build site → sync into android/ → signed release APK in release/
+npm run android:sync   # build site and copy it into android/ (no APK)
+npm run android:open   # open the Android project in Android Studio
+npm run android:assets # regenerate icon + splash from assets/*.png
+```
+
+App-only behaviour lives in `src/native.ts` (status bar, back button, opening external links in the phone's browser / mail app) and `src/platform.ts` (`isNativeApp`, back-button handlers).
+
+**Requirements on the build machine**
+- JDK 21 (Capacitor 8). Gradle is pointed at it in `~/.gradle/gradle.properties` via `org.gradle.java.home`.
+- Android SDK (`ANDROID_HOME`).
+- The signing files in `~/.android-keys/samhith-portfolio/` (`release.jks` + `signing.properties`). They are never in this repo. **Back them up** — without that exact keystore you cannot publish updates that install over the existing app.
+
+**Releasing:** bump `versionCode` and `versionName` in `android/app/build.gradle`, run `npm run apk`, then attach `release/samhith-v-gupta-<version>.apk` to a GitHub Release. The APK is gitignored — don't commit it. Set `androidAppUrl` in `src/data/profile.ts` to the release page so the website's "Get the Android app" button turns on (it is hidden inside the app).
+
 ## Social preview
 
 `public/og-image.png` (1200×630) is the link-preview image. After deploying, change `og:image` and `twitter:image` in `index.html` to the absolute URL (e.g. `https://your-domain/og-image.png`) — LinkedIn requires an absolute URL.

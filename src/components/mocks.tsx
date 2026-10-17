@@ -49,7 +49,7 @@ function GraphNode({ n }: { n: NodeT }) {
       {n.kind === 'phone' && <circle cx={n.x} cy={n.y} r="6" fill="#0f0f11" {...common} />}
       {n.kind === 'account' && <rect x={n.x - 6} y={n.y - 6} width="12" height="12" rx="2" fill="#2a2414" stroke={AMBER} strokeWidth="1.2" />}
       {n.kind === 'place' && <rect x={n.x - 5} y={n.y - 5} width="10" height="10" transform={`rotate(45 ${n.x} ${n.y})`} fill="#0f0f11" stroke="rgb(255 255 255 / 0.4)" />}
-      <text x={n.x} y={n.y + (sel ? 28 : 22)} textAnchor="middle" fontSize="10.5" fill={sel ? '#f2f2ee' : '#a8a8a2'} fontFamily="Geist Mono, monospace">
+      <text x={n.x} y={n.y + (sel ? 28 : 22)} textAnchor="middle" fontSize="10.5" fill={sel ? '#f2f2ee' : '#a8a8a2'} fontFamily="Geist Mono Variable, monospace">
         {n.label}
       </text>
     </g>
@@ -238,14 +238,14 @@ export function PaimanaMock() {
               {[0, 25, 50, 75, 100].map((v) => (
                 <g key={v}>
                   <line x1={x0} x2={x0 + w} y1={py(v)} y2={py(v)} stroke="rgb(255 255 255 / 0.06)" />
-                  <text x={x0 - 8} y={py(v) + 3.5} textAnchor="end" fontSize="9.5" fill="#85857f" fontFamily="Geist Mono, monospace">{v}%</text>
+                  <text x={x0 - 8} y={py(v) + 3.5} textAnchor="end" fontSize="9.5" fill="#85857f" fontFamily="Geist Mono Variable, monospace">{v}%</text>
                 </g>
               ))}
               {MONTHS.map((m, i) => (
-                <text key={m} x={px(i)} y={y0 + 18} textAnchor="middle" fontSize="9.5" fill="#85857f" fontFamily="Geist Mono, monospace">{m}</text>
+                <text key={m} x={px(i)} y={y0 + 18} textAnchor="middle" fontSize="9.5" fill="#85857f" fontFamily="Geist Mono Variable, monospace">{m}</text>
               ))}
-              <text x={px(last + 6)} y={y0 + 18} textAnchor="middle" fontSize="9.5" fill="#85857f" fontFamily="Geist Mono, monospace">+6</text>
-              <text x={px(last + 12)} y={y0 + 18} textAnchor="middle" fontSize="9.5" fill="#85857f" fontFamily="Geist Mono, monospace">+12</text>
+              <text x={px(last + 6)} y={y0 + 18} textAnchor="middle" fontSize="9.5" fill="#85857f" fontFamily="Geist Mono Variable, monospace">+6</text>
+              <text x={px(last + 12)} y={y0 + 18} textAnchor="middle" fontSize="9.5" fill="#85857f" fontFamily="Geist Mono Variable, monospace">+12</text>
               <polyline points={plan.map((v, i) => `${px(i)},${py(v)}`).join(' ')} fill="none" stroke="rgb(255 255 255 / 0.28)" strokeDasharray="3 4" />
               <polygon points={band} fill="rgb(212 243 106 / 0.12)" />
               <polyline points={fc.map((v, k) => `${px(last + k)},${py(v)}`).join(' ')} fill="none" stroke={ACCENT} strokeWidth="2" strokeDasharray="5 4" />
@@ -254,10 +254,10 @@ export function PaimanaMock() {
                 <circle key={i} cx={px(i)} cy={py(v)} r="2.5" fill="#0e0e10" stroke="#f2f2ee" strokeWidth="1.5" />
               ))}
               <line x1={px(last)} x2={px(last)} y1={py(100)} y2={y0} stroke="rgb(255 255 255 / 0.18)" />
-              <text x={px(last) + 6} y={py(100) + 10} fontSize="9.5" fill="#a8a8a2" fontFamily="Geist Mono, monospace">today</text>
+              <text x={px(last) + 6} y={py(100) + 10} fontSize="9.5" fill="#a8a8a2" fontFamily="Geist Mono Variable, monospace">today</text>
               <circle cx={px(4)} cy={py(HIST[4])} r="8" fill="none" stroke={AMBER} strokeWidth="1.5" />
-              <text x={px(4)} y={py(HIST[4]) + 24} textAnchor="middle" fontSize="9.5" fill={AMBER} fontFamily="Geist Mono, monospace">slowdown</text>
-              <text x={px(last + 12) - 4} y={py(hi[12]) - 8} textAnchor="end" fontSize="9.5" fill={ACCENT} fontFamily="Geist Mono, monospace">p10–p90</text>
+              <text x={px(4)} y={py(HIST[4]) + 24} textAnchor="middle" fontSize="9.5" fill={AMBER} fontFamily="Geist Mono Variable, monospace">slowdown</text>
+              <text x={px(last + 12) - 4} y={py(hi[12]) - 8} textAnchor="end" fontSize="9.5" fill={ACCENT} fontFamily="Geist Mono Variable, monospace">p10–p90</text>
             </svg>
             <div className="absolute bottom-4 left-5">
               <SyntheticTag>Dataset scope is real · chart values illustrative</SyntheticTag>
@@ -322,7 +322,7 @@ export function EcoBuddyMock() {
             <svg viewBox="0 0 120 120" className="w-36">
               <circle cx="60" cy="60" r={r} fill="none" stroke="rgb(255 255 255 / 0.08)" strokeWidth="10" />
               <circle cx="60" cy="60" r={r} fill="none" stroke={ACCENT} strokeWidth="10" strokeLinecap="round" strokeDasharray={`${c * 0.62} ${c}`} transform="rotate(-90 60 60)" />
-              <text x="60" y="64" textAnchor="middle" fontSize="26" fontWeight="600" fill="#f2f2ee" fontFamily="Bricolage Grotesque, sans-serif">62</text>
+              <text x="60" y="64" textAnchor="middle" fontSize="26" fontWeight="600" fill="#f2f2ee" fontFamily="Bricolage Grotesque Variable, sans-serif">62</text>
             </svg>
             <p className="mt-2 text-[#a8a8a2]">Eco score this week</p>
           </div>

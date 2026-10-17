@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useRef, useState, type ReactNode } from 'react'
 import { ArrowUpRight, X } from 'lucide-react'
 import { projects } from '../data/projects'
+import { registerBackHandler } from '../platform'
 import { GitHubIcon } from './icons'
 import { ProjectVisual, Stack, Status } from './projectBits'
 
@@ -38,6 +39,15 @@ export function ProjectDrawer({ projectId, onClose }: Props) {
     }, 180)
   }, [])
 
+  // Android back button closes the drawer before anything else.
+  useEffect(() => {
+    if (!project) return
+    return registerBackHandler(() => {
+      requestClose()
+      return true
+    })
+  }, [project, requestClose])
+
   return (
     <dialog
       ref={ref}
@@ -54,7 +64,9 @@ export function ProjectDrawer({ projectId, onClose }: Props) {
     >
       <div data-backdrop="true" className="flex h-full w-full items-end justify-end md:items-stretch">
         {project && (
-          <div className="drawer-panel flex max-h-[92dvh] w-full flex-col overflow-hidden rounded-t-2xl border border-line-strong bg-surface md:max-h-none md:w-[min(680px,100vw)] md:rounded-none md:border-y-0 md:border-r-0">
+          <div
+            style={{ paddingTop: 'var(--safe-top)' }}
+            className="drawer-panel flex max-h-[92dvh] w-full flex-col overflow-hidden rounded-t-2xl border border-line-strong bg-surface md:max-h-none md:w-[min(680px,100vw)] md:rounded-none md:border-y-0 md:border-r-0">
             <header className="flex items-center justify-between gap-4 border-b border-line px-6 py-4 md:px-10">
               <p className="meta">
                 Project {String(index).padStart(2, '0')} / {String(projects.length).padStart(2, '0')}
@@ -125,7 +137,10 @@ export function ProjectDrawer({ projectId, onClose }: Props) {
               </div>
             </div>
 
-            <footer className="flex flex-wrap items-center gap-3 border-t border-line bg-bg-alt px-6 py-4 md:px-10">
+            <footer
+              className="flex flex-wrap items-center gap-3 border-t border-line bg-bg-alt px-6 pt-4 md:px-10"
+              style={{ paddingBottom: 'calc(1rem + var(--safe-bottom))' }}
+            >
               {project.links.demo && (
                 <a href={project.links.demo} target="_blank" rel="noopener noreferrer" className="btn-primary py-2.5">
                   Live demo <ArrowUpRight className="size-4" aria-hidden="true" />

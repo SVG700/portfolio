@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { ArrowUpRight, Check, Copy } from 'lucide-react'
 import { profile, roleFit } from '../data/profile'
 import { GitHubIcon, LinkedInIcon } from './icons'
+import { AndroidAppLink } from './AndroidAppLink'
 import { ResumeButton } from './ResumeButton'
 import { SectionLabel } from './SectionLabel'
 
@@ -59,8 +60,9 @@ export function Contact() {
               </span>
             </div>
 
-            <div className="mt-10 flex flex-wrap gap-3">
+            <div className="mt-10 flex flex-wrap items-start gap-x-3 gap-y-5">
               <ResumeButton label="Download resume" download />
+              <AndroidAppLink />
             </div>
           </div>
 

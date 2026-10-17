@@ -19,23 +19,37 @@
   --color-accent-ink: #0b0b0c;
   --color-amber: #f2b84b;
 
-  --font-display: 'Bricolage Grotesque', 'Geist', ui-sans-serif, system-ui, sans-serif;
-  --font-sans: 'Geist', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
-  --font-mono: 'Geist Mono', ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace;
+  --font-display: 'Bricolage Grotesque Variable', 'Geist Variable', ui-sans-serif, system-ui, sans-serif;
+  --font-sans: 'Geist Variable', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-mono: 'Geist Mono Variable', ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace;
 
   --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/*
+  Safe areas (notch, status bar, gesture bar). env() covers modern WebViews;
+  --safe-area-inset-* is injected by Capacitor's edge-to-edge handling.
+  Both are 0 on a normal desktop browser.
+*/
+:root {
+  --safe-top: max(env(safe-area-inset-top, 0px), var(--safe-area-inset-top, 0px));
+  --safe-bottom: max(env(safe-area-inset-bottom, 0px), var(--safe-area-inset-bottom, 0px));
+  --safe-left: max(env(safe-area-inset-left, 0px), var(--safe-area-inset-left, 0px));
+  --safe-right: max(env(safe-area-inset-right, 0px), var(--safe-area-inset-right, 0px));
 }
 
 @layer base {
   html {
     color-scheme: dark;
     scroll-behavior: smooth;
-    scroll-padding-top: 5rem;
+    scroll-padding-top: calc(5rem + var(--safe-top));
     -webkit-text-size-adjust: 100%;
   }
   body {
     @apply bg-bg font-sans text-ink antialiased;
     overflow-x: clip;
+    padding-left: var(--safe-left);
+    padding-right: var(--safe-right);
   }
   ::selection {
     background: var(--color-accent);
@@ -262,4 +276,23 @@ dialog.drawer.is-closing .drawer-panel {
 dialog.drawer.is-closing::backdrop {
   opacity: 0;
   transition: opacity 0.18s ease;
+}
+
+/* ---------- Android app shell ---------- */
+.native-app {
+  /* No tap-highlight flashes — feels native. */
+  -webkit-tap-highlight-color: transparent;
+  overscroll-behavior-y: none;
+}
+/* Keep the WebView light on low-end phones: no backdrop blur (costly to
+   composite on every scroll frame) and no looping decorative animation. */
+.native-app header,
+.native-app dialog.drawer::backdrop {
+  backdrop-filter: none !important;
+}
+.native-app header.backdrop-blur-lg {
+  background-color: var(--color-bg);
+}
+.native-app .flow-dash {
+  animation: none;
 }

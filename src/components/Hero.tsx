@@ -25,7 +25,7 @@ export function Hero() {
   const strip = STRIP.map((t) => achievements.find((a) => a.title === t)).filter((a) => a !== undefined)
 
   return (
-    <section id="top" className="relative pt-28 md:pt-36">
+    <section id="top" className="relative pt-28 md:pt-36" style={{ marginTop: 'var(--safe-top)' }}>
       <div className="container-page">
         <div className="enter flex flex-wrap items-center justify-between gap-x-6 gap-y-2 border-b border-line pb-5">
           <p className="flex flex-wrap items-center gap-x-3 gap-y-1 text-[15px]">

@@ -2,7 +2,7 @@ import { profile } from '../data/profile'
 
 export function Footer() {
   return (
-    <footer className="border-t border-line bg-bg">
+    <footer className="border-t border-line bg-bg" style={{ paddingBottom: 'var(--safe-bottom)' }}>
       <div className="container-page flex flex-col gap-5 py-8 text-[13.5px] text-muted md:flex-row md:items-center md:justify-between">
         <p>
           © {new Date().getFullYear()} {profile.name}

@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { ArrowUpRight } from 'lucide-react'
 import { profile } from '../data/profile'
 import { useActiveSection } from '../hooks'
+import { registerBackHandler } from '../platform'
 
 const NAV = [
   { id: 'work', label: 'Work' },
@@ -27,15 +28,23 @@ export function Navbar() {
   useEffect(() => {
     document.body.style.overflow = open ? 'hidden' : ''
     if (!open) return
+    const unregister = registerBackHandler(() => {
+      setOpen(false)
+      return true
+    })
     const onKey = (e: KeyboardEvent) => e.key === 'Escape' && setOpen(false)
     window.addEventListener('keydown', onKey)
-    return () => window.removeEventListener('keydown', onKey)
+    return () => {
+      unregister()
+      window.removeEventListener('keydown', onKey)
+    }
   }, [open])
 
   const close = () => setOpen(false)
 
   return (
     <header
+      style={{ paddingTop: 'var(--safe-top)' }}
       className={`fixed inset-x-0 top-0 z-50 transition-[background-color,border-color] duration-300 ${
         open ? 'bg-bg' : scrolled ? 'border-b border-line bg-bg/80 backdrop-blur-lg' : 'border-b border-transparent'
       }`}
@@ -99,9 +108,13 @@ export function Navbar() {
       <div
         id="mobile-menu"
         hidden={!open}
-        className="fixed inset-x-0 top-16 bottom-0 overflow-y-auto bg-bg md:hidden"
+        style={{ top: 'calc(4rem + var(--safe-top))' }}
+        className="fixed inset-x-0 bottom-0 overflow-y-auto bg-bg md:hidden"
       >
-        <div className="container-page flex min-h-full flex-col justify-between pt-6 pb-10">
+        <div
+          className="container-page flex min-h-full flex-col justify-between pt-6"
+          style={{ paddingBottom: 'calc(2.5rem + var(--safe-bottom))' }}
+        >
           <ul>
             {[...NAV, { id: 'contact', label: 'Contact' }].map((item, i) => (
               <li key={item.id} className="enter border-b border-line" style={{ animationDelay: `${i * 40}ms` }}>

@@ -21,6 +21,14 @@ export const profile = {
   resumePath: '/resume.pdf',
   /** Keep false unless you explicitly want an "Open to internships" badge. */
   openToInternships: false,
+  /**
+   * Android app download, shown on the website only (hidden inside the app).
+   * TODO: once the "portfolio" repo exists and the APK is attached to a GitHub
+   * Release, set this to the release URL, e.g.
+   *   'https://github.com/SVG700/portfolio/releases/latest'
+   * While it is null the button renders disabled ("Coming soon").
+   */
+  androidAppUrl: null as string | null,
 } as const
 
 export const about = {

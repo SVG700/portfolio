@@ -11,7 +11,7 @@ function FeatureNexora({ p }: { p: Project }) {
   return (
     <article className="grid gap-10 lg:grid-cols-12 lg:gap-12" aria-labelledby={`${p.id}-h`}>
       <div className="reveal flex flex-col lg:col-span-4">
-        <div className="flex items-center justify-between gap-4">
+        <div className="flex flex-wrap items-center justify-between gap-x-4 gap-y-1">
           <p className="meta">{num(p)} — Featured</p>
           <Status status={p.status} />
         </div>
@@ -106,7 +106,7 @@ function FeaturePaimana({ p }: { p: Project }) {
 function ProjectTile({ p, wide }: { p: Project; wide: boolean }) {
   const open = useOpenProject()
   return (
-    <article className={`reveal group ${wide ? 'lg:col-span-7' : 'lg:col-span-5'}`} aria-labelledby={`${p.id}-h`}>
+    <article className={`reveal group min-w-0 ${wide ? 'lg:col-span-7' : 'lg:col-span-5'}`} aria-labelledby={`${p.id}-h`}>
       <button
         type="button"
         onClick={() => open(p.id)}
@@ -118,7 +118,7 @@ function ProjectTile({ p, wide }: { p: Project; wide: boolean }) {
           <ProjectVisual project={p} />
         </div>
       </button>
-      <div className="mt-6 flex items-center justify-between gap-4">
+      <div className="mt-6 flex flex-wrap items-center justify-between gap-x-4 gap-y-1">
         <p className="meta">
           {num(p)} — {p.category}
         </p>
