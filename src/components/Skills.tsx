@@ -2,6 +2,7 @@ import { Fragment } from 'react'
 import { projects } from '../data/projects'
 import { skillGroups } from '../data/skills'
 import { useOpenProject } from '../drawer'
+import { Reveal, Stagger, StaggerItem } from '../motion'
 import { SectionLabel } from './SectionLabel'
 
 const nameOf = Object.fromEntries(projects.map((p) => [p.id, p.name]))
@@ -11,12 +12,14 @@ export function Skills() {
   return (
     <section id="skills" className="border-t border-line bg-bg-alt py-20 md:py-28">
       <div className="container-page">
-        <SectionLabel index="03">Skills</SectionLabel>
-        <h2 className="display-lg mt-5">What I build with</h2>
+        <Reveal>
+          <SectionLabel index="03">Skills</SectionLabel>
+          <h2 className="display-lg mt-5">What I build with</h2>
+        </Reveal>
 
-        <dl className="mt-10 border-t border-line-strong">
+        <Stagger as="dl" className="mt-10 border-t border-line-strong">
           {skillGroups.map((g) => (
-            <div key={g.title} className="grid gap-2 border-b border-line py-5 md:grid-cols-[11rem_1fr_auto] md:items-baseline md:gap-8">
+            <StaggerItem as="div" key={g.title} className="grid gap-2 border-b border-line py-5 md:grid-cols-[11rem_1fr_auto] md:items-baseline md:gap-8">
               <dt className="meta text-muted">{g.title}</dt>
               <dd className="text-[1.05rem] leading-relaxed">
                 {g.skills.map((s, i) => (
@@ -46,9 +49,9 @@ export function Skills() {
                   ))}
                 </dd>
               )}
-            </div>
+            </StaggerItem>
           ))}
-        </dl>
+        </Stagger>
       </div>
     </section>
   )

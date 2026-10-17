@@ -1,7 +1,7 @@
-import { FileText } from 'lucide-react'
 import { profile } from '../data/profile'
 import { useResumeAvailable } from '../hooks'
 import { isNativeApp } from '../platform'
+import { FileText } from './icons'
 
 type Props = { label?: string; className?: string; download?: boolean }
 

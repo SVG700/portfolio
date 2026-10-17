@@ -1,3 +1,5 @@
+import type { ReactNode } from 'react'
+
 // Brand marks drawn inline so we don't depend on icon-set brand support.
 type IconProps = { className?: string }
 
@@ -16,3 +18,75 @@ export function LinkedInIcon({ className = 'size-4' }: IconProps) {
     </svg>
   )
 }
+
+// UI icons — path data from Lucide (https://lucide.dev, ISC licence), inlined
+// so the build doesn't load the whole icon package.
+type UiIconProps = { className?: string; 'aria-hidden'?: boolean | 'true' | 'false' }
+
+function UiIcon({ className = 'size-4', children, ...rest }: UiIconProps & { children: ReactNode }) {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth={2}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden={rest['aria-hidden'] ?? true}
+      className={className}
+    >
+      {children}
+    </svg>
+  )
+}
+
+export const ArrowDown = (p: UiIconProps) => (
+  <UiIcon {...p}>
+    <path d="M12 5v14" />
+    <path d="m19 12-7 7-7-7" />
+  </UiIcon>
+)
+export const ArrowUpRight = (p: UiIconProps) => (
+  <UiIcon {...p}>
+    <path d="M7 7h10v10" />
+    <path d="M7 17 17 7" />
+  </UiIcon>
+)
+export const Mail = (p: UiIconProps) => (
+  <UiIcon {...p}>
+    <rect width="20" height="16" x="2" y="4" rx="2" />
+    <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
+  </UiIcon>
+)
+export const Check = (p: UiIconProps) => (
+  <UiIcon {...p}>
+    <path d="M20 6 9 17l-5-5" />
+  </UiIcon>
+)
+export const Copy = (p: UiIconProps) => (
+  <UiIcon {...p}>
+    <rect width="14" height="14" x="8" y="8" rx="2" ry="2" />
+    <path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2" />
+  </UiIcon>
+)
+export const FileText = (p: UiIconProps) => (
+  <UiIcon {...p}>
+    <path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z" />
+    <path d="M14 2v4a2 2 0 0 0 2 2h4" />
+    <path d="M10 9H8" />
+    <path d="M16 13H8" />
+    <path d="M16 17H8" />
+  </UiIcon>
+)
+export const Smartphone = (p: UiIconProps) => (
+  <UiIcon {...p}>
+    <rect width="14" height="20" x="5" y="2" rx="2" ry="2" />
+    <path d="M12 18h.01" />
+  </UiIcon>
+)
+export const X = (p: UiIconProps) => (
+  <UiIcon {...p}>
+    <path d="M18 6 6 18" />
+    <path d="m6 6 12 12" />
+  </UiIcon>
+)

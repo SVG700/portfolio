@@ -1,15 +1,18 @@
 import { activities, education, languages } from '../data/profile'
+import { Reveal } from '../motion'
 import { SectionLabel } from './SectionLabel'
 
 export function Education() {
   return (
     <section id="education" className="py-20 md:py-28">
       <div className="container-page">
-        <SectionLabel index="04">Education & activities</SectionLabel>
-        <h2 className="display-lg mt-5">Background</h2>
+        <Reveal>
+          <SectionLabel index="04">Education & activities</SectionLabel>
+          <h2 className="display-lg mt-5">Background</h2>
+        </Reveal>
 
         <div className="mt-10 grid gap-12 lg:grid-cols-12 lg:gap-12">
-          <div className="lg:col-span-5">
+          <Reveal className="lg:col-span-5">
             <h3 className="meta text-muted">Education</h3>
             <ol className="mt-3 border-t border-line-strong">
               {education.map((e) => (
@@ -27,9 +30,9 @@ export function Education() {
                 </li>
               ))}
             </ol>
-          </div>
+          </Reveal>
 
-          <div className="lg:col-span-4">
+          <Reveal className="lg:col-span-4" delay={0.08}>
             <h3 className="meta text-muted">Activities</h3>
             <ul className="mt-3 border-t border-line-strong">
               {activities.map((a) => (
@@ -38,9 +41,9 @@ export function Education() {
                 </li>
               ))}
             </ul>
-          </div>
+          </Reveal>
 
-          <div className="lg:col-span-3">
+          <Reveal className="lg:col-span-3" delay={0.16}>
             <h3 className="meta text-muted">Languages</h3>
             <ul className="mt-3 border-t border-line-strong">
               {languages.map((l) => (
@@ -50,7 +53,7 @@ export function Education() {
                 </li>
               ))}
             </ul>
-          </div>
+          </Reveal>
         </div>
       </div>
     </section>

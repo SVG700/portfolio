@@ -1,6 +1,6 @@
-import { ArrowUpRight, Smartphone } from 'lucide-react'
 import { profile } from '../data/profile'
 import { isNativeApp } from '../platform'
+import { ArrowUpRight, Smartphone } from './icons'
 
 /**
  * "Get the Android app" — website only, and only once a release URL is set

@@ -1,7 +1,6 @@
-import { ArrowUpRight } from 'lucide-react'
 import type { Project, ProjectStatus } from '../data/projects'
 import { useOpenProject } from '../drawer'
-import { GitHubIcon } from './icons'
+import { ArrowUpRight, GitHubIcon } from './icons'
 import { ProjectMock } from './mocks'
 import { Frame } from './WorkCollage'
 

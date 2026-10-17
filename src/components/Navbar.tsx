@@ -1,8 +1,10 @@
-import { useEffect, useState } from 'react'
-import { ArrowUpRight } from 'lucide-react'
+import { AnimatePresence, m } from 'framer-motion'
+import { useEffect, useLayoutEffect, useRef, useState } from 'react'
 import { profile } from '../data/profile'
 import { useActiveSection } from '../hooks'
+import { EASE, itemVariants } from '../motion-shared'
 import { registerBackHandler } from '../platform'
+import { ArrowUpRight } from './icons'
 
 const NAV = [
   { id: 'experience', label: 'Experience' },
@@ -16,6 +18,19 @@ export function Navbar() {
   const active = useActiveSection(IDS)
   const [open, setOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
+  const listRef = useRef<HTMLUListElement>(null)
+  const [bar, setBar] = useState<{ x: number; w: number } | null>(null)
+
+  // One indicator that slides between links (transform only).
+  useLayoutEffect(() => {
+    const measure = () => {
+      const link = listRef.current?.querySelector<HTMLElement>('a[aria-current="true"]')
+      setBar(link ? { x: link.offsetLeft, w: link.offsetWidth } : null)
+    }
+    measure()
+    window.addEventListener('resize', measure)
+    return () => window.removeEventListener('resize', measure)
+  }, [active])
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 12)
@@ -60,7 +75,7 @@ export function Navbar() {
           <span className="sr-only"> — back to top</span>
         </a>
 
-        <ul className="hidden items-center gap-7 md:flex">
+        <ul ref={listRef} className="relative hidden items-center gap-7 md:flex">
           {NAV.map((item) => {
             const isActive = active === item.id
             return (
@@ -71,14 +86,18 @@ export function Navbar() {
                   className={`relative py-2 text-[14px] transition-colors ${isActive ? 'text-ink' : 'text-muted hover:text-ink'}`}
                 >
                   {item.label}
-                  <span
-                    className={`absolute -bottom-0.5 left-0 h-px bg-accent transition-[width] duration-300 ${isActive ? 'w-full' : 'w-0'}`}
-                    aria-hidden="true"
-                  />
                 </a>
               </li>
             )
           })}
+          <span
+            aria-hidden="true"
+            className="pointer-events-none absolute bottom-1.5 left-0 h-px w-[100px] origin-left bg-accent transition-[transform,opacity] duration-500 ease-[var(--ease-out-expo)]"
+            style={{
+              transform: `translateX(${bar?.x ?? 0}px) scaleX(${(bar?.w ?? 0) / 100})`,
+              opacity: bar ? 1 : 0,
+            }}
+          />
         </ul>
 
         <div className="flex items-center gap-2">
@@ -104,41 +123,49 @@ export function Navbar() {
         </div>
       </nav>
 
-      <div
-        id="mobile-menu"
-        hidden={!open}
-        style={{ top: 'calc(4rem + var(--safe-top))' }}
-        className="fixed inset-x-0 bottom-0 overflow-y-auto bg-bg md:hidden"
-      >
-        <div
-          className="container-page flex min-h-full flex-col justify-between pt-6"
-          style={{ paddingBottom: 'calc(2.5rem + var(--safe-bottom))' }}
-        >
-          <ul>
-            {[...NAV, { id: 'contact', label: 'Contact' }].map((item, i) => (
-              <li key={item.id} className="enter border-b border-line" style={{ animationDelay: `${i * 40}ms` }}>
-                <a href={`#${item.id}`} onClick={close} className="flex items-baseline justify-between py-4">
-                  <span className="display-md">{item.label}</span>
-                  <span className="meta">{String(i + 1).padStart(2, '0')}</span>
+      <AnimatePresence>
+        {open && (
+          <m.div
+            id="mobile-menu"
+            key="mobile-menu"
+            initial={{ opacity: 0, y: -8 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -8 }}
+            transition={{ duration: 0.28, ease: EASE }}
+            style={{ top: 'calc(4rem + var(--safe-top))' }}
+            className="fixed inset-x-0 bottom-0 overflow-y-auto bg-bg md:hidden"
+          >
+            <div
+              className="container-page flex min-h-full flex-col justify-between pt-6"
+              style={{ paddingBottom: 'calc(2.5rem + var(--safe-bottom))' }}
+            >
+              <m.ul initial="hidden" animate="show" variants={{ hidden: {}, show: { transition: { staggerChildren: 0.045 } } }}>
+                {[...NAV, { id: 'contact', label: 'Contact' }].map((item, i) => (
+                  <m.li key={item.id} variants={itemVariants} className="border-b border-line">
+                    <a href={`#${item.id}`} onClick={close} className="flex items-baseline justify-between py-4">
+                      <span className="display-md">{item.label}</span>
+                      <span className="meta">{String(i + 1).padStart(2, '0')}</span>
+                    </a>
+                  </m.li>
+                ))}
+              </m.ul>
+              <div className="mt-10 space-y-3 text-[15px]">
+                <a href={`mailto:${profile.email}`} className="block break-all text-ink">
+                  {profile.email}
                 </a>
-              </li>
-            ))}
-          </ul>
-          <div className="mt-10 space-y-3 text-[15px]">
-            <a href={`mailto:${profile.email}`} className="block break-all text-ink">
-              {profile.email}
-            </a>
-            <div className="flex gap-5 text-muted">
-              <a href={profile.links.linkedin} target="_blank" rel="noopener noreferrer">
-                LinkedIn<span className="sr-only"> (opens in a new tab)</span>
-              </a>
-              <a href={profile.links.github} target="_blank" rel="noopener noreferrer">
-                GitHub<span className="sr-only"> (opens in a new tab)</span>
-              </a>
+                <div className="flex gap-5 text-muted">
+                  <a href={profile.links.linkedin} target="_blank" rel="noopener noreferrer">
+                    LinkedIn<span className="sr-only"> (opens in a new tab)</span>
+                  </a>
+                  <a href={profile.links.github} target="_blank" rel="noopener noreferrer">
+                    GitHub<span className="sr-only"> (opens in a new tab)</span>
+                  </a>
+                </div>
+              </div>
             </div>
-          </div>
-        </div>
-      </div>
+          </m.div>
+        )}
+      </AnimatePresence>
     </header>
   )
 }

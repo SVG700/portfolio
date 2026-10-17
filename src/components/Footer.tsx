@@ -1,8 +1,8 @@
 import { useState } from 'react'
-import { ArrowUpRight, Check, Copy } from 'lucide-react'
 import { profile } from '../data/profile'
+import { Reveal } from '../motion'
 import { AndroidAppLink } from './AndroidAppLink'
-import { GitHubIcon, LinkedInIcon } from './icons'
+import { ArrowUpRight, Check, Copy, GitHubIcon, LinkedInIcon } from './icons'
 import { ResumeButton } from './ResumeButton'
 
 /** Contact band + footer, closing the page. */
@@ -22,7 +22,7 @@ export function Footer() {
   return (
     <footer id="contact" className="border-t border-line bg-surface" style={{ paddingBottom: 'var(--safe-bottom)' }}>
       <div className="container-page py-16 md:py-20">
-        <div className="grid gap-10 lg:grid-cols-12 lg:items-end">
+        <Reveal className="grid gap-10 lg:grid-cols-12 lg:items-end">
           <div className="lg:col-span-7">
             <p className="meta text-muted">
               <span className="text-accent">(05)</span> Contact
@@ -64,7 +64,7 @@ export function Footer() {
             <ResumeButton label="Download resume" download />
             <AndroidAppLink />
           </div>
-        </div>
+        </Reveal>
       </div>
 
       <div className="border-t border-line">

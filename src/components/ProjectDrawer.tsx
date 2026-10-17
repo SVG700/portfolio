@@ -1,8 +1,7 @@
 import { useCallback, useEffect, useRef, useState, type ReactNode } from 'react'
-import { ArrowUpRight, X } from 'lucide-react'
 import { projects } from '../data/projects'
 import { registerBackHandler } from '../platform'
-import { GitHubIcon } from './icons'
+import { ArrowUpRight, GitHubIcon, X } from './icons'
 import { ProjectVisual, Stack, Status } from './projectBits'
 
 type Props = { projectId: string | null; onClose: () => void }

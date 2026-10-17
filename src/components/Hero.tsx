@@ -1,6 +1,6 @@
-import { ArrowDown, Mail } from 'lucide-react'
 import { profile } from '../data/profile'
-import { GitHubIcon, LinkedInIcon } from './icons'
+import { Magnetic } from '../motion'
+import { ArrowDown, GitHubIcon, LinkedInIcon, Mail } from './icons'
 import { ResumeButton } from './ResumeButton'
 import { WorkCollage } from './WorkCollage'
 
@@ -51,9 +51,11 @@ export function Hero() {
             </p>
 
             <div className="mt-8 flex flex-wrap gap-3">
-              <a href="#work" className="btn-primary">
-                View projects <ArrowDown className="size-4" aria-hidden="true" />
-              </a>
+              <Magnetic>
+                <a href="#work" className="btn-primary">
+                  View projects <ArrowDown className="size-4" aria-hidden="true" />
+                </a>
+              </Magnetic>
               <ResumeButton />
             </div>
 

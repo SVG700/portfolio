@@ -1,3 +1,6 @@
+import { m } from 'framer-motion'
+import { CountUp } from '../motion'
+import { EASE } from '../motion-shared'
 import { ScaledCanvas } from './ScaledCanvas'
 
 // Interface previews for projects without a public build. They show the
@@ -39,11 +42,18 @@ const E: [string, string, boolean?][] = [
 ]
 const byId = Object.fromEntries(N.map((n) => [n.id, n]))
 
-function GraphNode({ n }: { n: NodeT }) {
+const DRAW_VIEWPORT = { once: true, amount: 0.4 } as const
+
+function GraphNode({ n, index }: { n: NodeT; index: number }) {
   const sel = n.id === 'p7'
   const common = { stroke: sel ? ACCENT : 'rgb(255 255 255 / 0.55)', strokeWidth: sel ? 2 : 1.2 }
   return (
-    <g>
+    <m.g
+      initial={{ opacity: 0, scale: 0.6 }}
+      whileInView={{ opacity: 1, scale: 1 }}
+      viewport={DRAW_VIEWPORT}
+      transition={{ duration: 0.45, ease: EASE, delay: 0.35 + index * 0.05 }}
+    >
       {sel && <circle cx={n.x} cy={n.y} r="22" fill="rgb(212 243 106 / 0.12)" />}
       {n.kind === 'person' && <circle cx={n.x} cy={n.y} r={sel ? 11 : 8} fill={sel ? ACCENT : '#26262a'} {...common} />}
       {n.kind === 'phone' && <circle cx={n.x} cy={n.y} r="6" fill="#0f0f11" {...common} />}
@@ -52,7 +62,7 @@ function GraphNode({ n }: { n: NodeT }) {
       <text x={n.x} y={n.y + (sel ? 28 : 22)} textAnchor="middle" fontSize="10.5" fill={sel ? '#f2f2ee' : '#a8a8a2'} fontFamily="Geist Mono Variable, monospace">
         {n.label}
       </text>
-    </g>
+    </m.g>
   )
 }
 
@@ -110,9 +120,14 @@ export function NexoraMock() {
 
           <div className="dot-grid relative min-w-0 flex-1">
             <svg viewBox="0 0 520 420" className="absolute inset-0 h-full w-full">
-              {E.map(([a, b, hot]) => (
-                <line
+              {E.map(([a, b, hot], idx) => (
+                // Edges draw in; the highlighted path fades in (it keeps its flowing dash).
+                <m.line
                   key={a + b}
+                  initial={hot ? { opacity: 0 } : { pathLength: 0, opacity: 0 }}
+                  whileInView={hot ? { opacity: 1 } : { pathLength: 1, opacity: 1 }}
+                  viewport={DRAW_VIEWPORT}
+                  transition={{ duration: 0.7, ease: EASE, delay: hot ? 1 : idx * 0.05 }}
                   x1={byId[a].x}
                   y1={byId[a].y}
                   x2={byId[b].x}
@@ -123,8 +138,8 @@ export function NexoraMock() {
                   className={hot ? 'flow-dash' : undefined}
                 />
               ))}
-              {N.map((n) => (
-                <GraphNode key={n.id} n={n} />
+              {N.map((n, i) => (
+                <GraphNode key={n.id} n={n} index={i} />
               ))}
             </svg>
             <div className="absolute bottom-3 left-3 flex gap-3 rounded-md border border-white/[0.08] bg-[#0e0e10]/90 px-3 py-2 text-[10.5px] text-[#a8a8a2]">
@@ -216,7 +231,9 @@ export function PaimanaMock() {
             ['1–24 months', 'forecast horizon'],
           ].map(([v, k], i) => (
             <div key={k} className={`px-5 py-4 ${i > 0 ? 'border-l border-white/[0.08]' : ''}`}>
-              <p className="font-display text-[24px] font-semibold tracking-tight">{v}</p>
+              <p className="font-display text-[24px] font-semibold tracking-tight">
+                {/^\d[\d,]*$/.test(v) ? <CountUp text={v} /> : v}
+              </p>
               <p className="mt-0.5 text-[11.5px] text-[#a8a8a2]">{k}</p>
             </div>
           ))}
@@ -241,17 +258,23 @@ export function PaimanaMock() {
                   <text x={x0 - 8} y={py(v) + 3.5} textAnchor="end" fontSize="9.5" fill="#85857f" fontFamily="Geist Mono Variable, monospace">{v}%</text>
                 </g>
               ))}
-              {MONTHS.map((m, i) => (
-                <text key={m} x={px(i)} y={y0 + 18} textAnchor="middle" fontSize="9.5" fill="#85857f" fontFamily="Geist Mono Variable, monospace">{m}</text>
+              {MONTHS.map((mo, i) => (
+                <text key={mo} x={px(i)} y={y0 + 18} textAnchor="middle" fontSize="9.5" fill="#85857f" fontFamily="Geist Mono Variable, monospace">{mo}</text>
               ))}
               <text x={px(last + 6)} y={y0 + 18} textAnchor="middle" fontSize="9.5" fill="#85857f" fontFamily="Geist Mono Variable, monospace">+6</text>
               <text x={px(last + 12)} y={y0 + 18} textAnchor="middle" fontSize="9.5" fill="#85857f" fontFamily="Geist Mono Variable, monospace">+12</text>
-              <polyline points={plan.map((v, i) => `${px(i)},${py(v)}`).join(' ')} fill="none" stroke="rgb(255 255 255 / 0.28)" strokeDasharray="3 4" />
-              <polygon points={band} fill="rgb(212 243 106 / 0.12)" />
-              <polyline points={fc.map((v, k) => `${px(last + k)},${py(v)}`).join(' ')} fill="none" stroke={ACCENT} strokeWidth="2" strokeDasharray="5 4" />
-              <polyline points={HIST.map((v, i) => `${px(i)},${py(v)}`).join(' ')} fill="none" stroke="#f2f2ee" strokeWidth="2" />
+              {/* Observed line draws in, then its points, then the forecast band and line. */}
+              <m.polyline points={plan.map((v, i) => `${px(i)},${py(v)}`).join(' ')} fill="none" stroke="rgb(255 255 255 / 0.28)" strokeDasharray="3 4"
+                initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={DRAW_VIEWPORT} transition={{ duration: 0.6, delay: 0.1 }} />
+              <m.polygon points={band} fill="rgb(212 243 106 / 0.12)"
+                initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={DRAW_VIEWPORT} transition={{ duration: 0.7, delay: 1.1 }} />
+              <m.polyline points={fc.map((v, k) => `${px(last + k)},${py(v)}`).join(' ')} fill="none" stroke={ACCENT} strokeWidth="2" strokeDasharray="5 4"
+                initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={DRAW_VIEWPORT} transition={{ duration: 0.6, delay: 1.25 }} />
+              <m.polyline points={HIST.map((v, i) => `${px(i)},${py(v)}`).join(' ')} fill="none" stroke="#f2f2ee" strokeWidth="2"
+                initial={{ pathLength: 0 }} whileInView={{ pathLength: 1 }} viewport={DRAW_VIEWPORT} transition={{ duration: 1.1, ease: EASE, delay: 0.15 }} />
               {HIST.map((v, i) => (
-                <circle key={i} cx={px(i)} cy={py(v)} r="2.5" fill="#0e0e10" stroke="#f2f2ee" strokeWidth="1.5" />
+                <m.circle key={i} cx={px(i)} cy={py(v)} r="2.5" fill="#0e0e10" stroke="#f2f2ee" strokeWidth="1.5"
+                  initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={DRAW_VIEWPORT} transition={{ duration: 0.3, delay: 0.25 + i * 0.1 }} />
               ))}
               <line x1={px(last)} x2={px(last)} y1={py(100)} y2={y0} stroke="rgb(255 255 255 / 0.18)" />
               <text x={px(last) + 6} y={py(100) + 10} fontSize="9.5" fill="#a8a8a2" fontFamily="Geist Mono Variable, monospace">today</text>

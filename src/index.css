@@ -193,6 +193,15 @@
     opacity: 1;
   }
 }
+@keyframes float-soft {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-6px);
+  }
+}
 @keyframes dash {
   to {
     stroke-dashoffset: -16;
@@ -214,6 +223,32 @@
   animation: fade-up 0.9s var(--ease-out-expo) both;
 }
 
+
+.float-soft {
+  animation: float-soft 7s ease-in-out infinite;
+}
+
+/* Cursor-follow highlight for cards (desktop pointers only; see Work.tsx). */
+.spotlight {
+  position: relative;
+  isolation: isolate;
+}
+.spotlight::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: inherit;
+  background: radial-gradient(320px circle at var(--mx, 50%) var(--my, 50%), rgb(212 243 106 / 0.07), transparent 65%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+}
+@media (hover: hover) and (pointer: fine) {
+  .spotlight:hover::before {
+    opacity: 1;
+  }
+}
 
 .flow-dash {
   stroke-dasharray: 3 5;
@@ -283,8 +318,12 @@ dialog.drawer.is-closing::backdrop {
 .native-app header.backdrop-blur-lg {
   background-color: var(--color-bg);
 }
-.native-app .flow-dash {
+.native-app .flow-dash,
+.native-app .float-soft {
   animation: none;
+}
+.native-app .spotlight::before {
+  display: none;
 }
 
 /* Print and no-animation fallbacks: content is always visible. */
@@ -298,5 +337,11 @@ dialog.drawer.is-closing::backdrop {
   header,
   dialog {
     display: none !important;
+  }
+  /* Scroll reveals start at opacity 0; never print them hidden. */
+  main *,
+  footer * {
+    opacity: 1 !important;
+    transform: none !important;
   }
 }
