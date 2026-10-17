@@ -260,22 +260,22 @@ export function PaimanaMock() {
               <text x={px(last + 12) - 4} y={py(hi[12]) - 8} textAnchor="end" fontSize="9.5" fill={ACCENT} fontFamily="Geist Mono Variable, monospace">p10–p90</text>
             </svg>
             <div className="absolute bottom-4 left-5">
-              <SyntheticTag>Dataset scope is real · chart values illustrative</SyntheticTag>
+              <SyntheticTag>Dataset size is real · chart and risk values illustrative</SyntheticTag>
             </div>
           </div>
 
           <aside className="w-[300px] shrink-0 border-l border-white/[0.08] p-5">
             <div className="flex items-baseline justify-between">
-              <p className="text-[12.5px]">Delay-risk watchlist</p>
-              <p className="font-mono text-[10.5px] text-[#85857f]">by sector</p>
+              <p className="text-[12.5px]">Delay-risk view</p>
+              <p className="font-mono text-[10.5px] text-[#f2b84b]">sample values</p>
             </div>
             <ul className="mt-4 space-y-3.5">
               {[
-                ['Railways', 0.78, 'High'],
-                ['Road Transport', 0.64, 'High'],
-                ['Water Resources', 0.47, 'Med'],
-                ['Power', 0.36, 'Med'],
-                ['Petroleum', 0.18, 'Low'],
+                ['Sector A', 0.78, 'High'],
+                ['Sector B', 0.64, 'High'],
+                ['Sector C', 0.47, 'Med'],
+                ['Sector D', 0.36, 'Med'],
+                ['Sector E', 0.18, 'Low'],
               ].map(([k, v, t]) => (
                 <li key={k as string}>
                   <div className="flex justify-between text-[11.5px]">
@@ -289,7 +289,7 @@ export function PaimanaMock() {
               ))}
             </ul>
             <div className="mt-6 rounded-md border border-white/[0.08] bg-white/[0.02] p-3 text-[11px] leading-relaxed text-[#a8a8a2]">
-              <span className="text-[#f2f2ee]">Method</span> — adaptive run-rate velocity with empirical-Bayes shrinkage toward the sector.
+              Illustrative layout with placeholder sectors and values — not findings from the dataset.
             </div>
           </aside>
         </div>

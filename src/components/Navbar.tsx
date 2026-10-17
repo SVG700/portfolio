@@ -5,11 +5,10 @@ import { useActiveSection } from '../hooks'
 import { registerBackHandler } from '../platform'
 
 const NAV = [
-  { id: 'work', label: 'Work' },
-  { id: 'about', label: 'About' },
-  { id: 'skills', label: 'Toolkit' },
-  { id: 'recognition', label: 'Recognition' },
   { id: 'experience', label: 'Experience' },
+  { id: 'work', label: 'Projects' },
+  { id: 'skills', label: 'Skills' },
+  { id: 'education', label: 'Education' },
 ]
 const IDS = [...NAV.map((n) => n.id), 'contact']
 

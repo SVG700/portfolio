@@ -214,16 +214,6 @@
   animation: fade-up 0.9s var(--ease-out-expo) both;
 }
 
-/* Scroll reveal, toggled by useReveal. Content stays visible without JS. */
-.js .reveal:not(.is-visible) {
-  opacity: 0;
-  transform: translateY(16px);
-}
-.js .reveal {
-  transition:
-    opacity 0.6s var(--ease-out-expo),
-    transform 0.6s var(--ease-out-expo);
-}
 
 .flow-dash {
   stroke-dasharray: 3 5;
@@ -295,4 +285,18 @@ dialog.drawer.is-closing::backdrop {
 }
 .native-app .flow-dash {
   animation: none;
+}
+
+/* Print and no-animation fallbacks: content is always visible. */
+@media print {
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+  header,
+  dialog {
+    display: none !important;
+  }
 }

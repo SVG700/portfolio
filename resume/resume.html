@@ -1,0 +1,268 @@
+<!doctype html>
+<!--
+  Resume source. Render to PDF with:  npm run resume
+  Keep facts identical to src/data/* — the site and resume must agree.
+  No phone number by design.
+-->
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Samhith V Gupta — Resume</title>
+    <style>
+      @font-face {
+        font-family: 'Geist';
+        src: url('../node_modules/@fontsource-variable/geist/files/geist-latin-wght-normal.woff2') format('woff2');
+        font-weight: 100 900;
+      }
+      @page {
+        size: A4;
+        margin: 9mm 12mm 8mm;
+      }
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      body {
+        font-family: 'Geist', 'Segoe UI', Arial, sans-serif;
+        font-size: 9pt;
+        line-height: 1.25;
+        color: #1a1a1a;
+      }
+      a {
+        color: inherit;
+        text-decoration: none;
+      }
+      header {
+        text-align: center;
+      }
+      h1 {
+        font-size: 18pt;
+        font-weight: 650;
+        letter-spacing: -0.02em;
+        color: #12233f;
+      }
+      .contact {
+        margin-top: 2pt;
+        color: #333;
+      }
+      .contact span + span::before {
+        content: '|';
+        padding: 0 6pt;
+        color: #999;
+      }
+      .summary {
+        margin-top: 3pt;
+        color: #333;
+      }
+      h2 {
+        margin-top: 5.5pt;
+        padding-bottom: 1pt;
+        border-bottom: 1.2pt solid #12233f;
+        font-size: 10pt;
+        font-weight: 650;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+        color: #12233f;
+      }
+      .entry {
+        margin-top: 3pt;
+      }
+      .row {
+        display: flex;
+        justify-content: space-between;
+        gap: 10pt;
+      }
+      .row b {
+        font-weight: 620;
+      }
+      .role {
+        color: #444;
+        font-style: italic;
+      }
+      .sep {
+        color: #999;
+        padding: 0 3pt;
+      }
+      .date {
+        white-space: nowrap;
+        color: #333;
+      }
+      .tag {
+        border: 0.7pt solid #12233f;
+        border-radius: 2pt;
+        padding: 0 3pt;
+        font-size: 8pt;
+        color: #12233f;
+        white-space: nowrap;
+      }
+      ul {
+        margin-top: 1pt;
+        padding-left: 11pt;
+      }
+      li {
+        margin-top: 0;
+      }
+      .skills p,
+      .plain p {
+        margin-top: 1.5pt;
+      }
+      .nw {
+        white-space: nowrap;
+      }
+      .muted {
+        color: #555;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1>Samhith V Gupta</h1>
+      <p class="contact">
+        <span><a href="mailto:samhithvgupta@gmail.com">samhithvgupta@gmail.com</a></span>
+        <span><a href="https://linkedin.com/in/samhith-v-gupta">linkedin.com/in/samhith-v-gupta</a></span>
+        <span><a href="https://github.com/SVG700">github.com/SVG700</a></span>
+        <span>Bengaluru, India</span>
+      </p>
+      <p class="summary">
+        CS undergraduate building full-stack web, Android and AI-integrated applications. INSPIRE Awardee, NITI Aayog ATL Top 100
+        Tinkerpreneur and Google Student Ambassador, seeking software engineering and AI application internships.
+      </p>
+    </header>
+
+    <h2>Education</h2>
+    <div class="entry">
+      <div class="row"><b>Presidency University, Bengaluru</b><span class="date">Aug 2025 – 2029 (expected)</span></div>
+      <div>B.Tech, Computer Science and Engineering<span class="sep">|</span>Class Representative</div>
+    </div>
+    <div class="entry">
+      <div class="row"><b>Sri Ramakrishna Vidyashala, Mysore</b><span class="date">Apr 2021 – Mar 2025</span></div>
+      <div>High School &amp; Pre-University (PCMC)</div>
+    </div>
+
+    <h2>Technical Skills</h2>
+    <div class="skills">
+      <p><b>Languages:</b> JavaScript, TypeScript, Python, C, HTML/CSS; Java (learning), XML (basic)</p>
+      <p><b>Frameworks &amp; Libraries:</b> React, Next.js, Tailwind CSS, Framer Motion, Vite, FastAPI</p>
+      <p><b>Backend, Mobile &amp; AI:</b> Supabase, REST APIs, Google Gemini API, Android Studio, Firebase (Auth, Cloud Messaging), Algorand</p>
+      <p><b>Tools:</b> Git, GitHub, Vercel, VS Code</p>
+    </div>
+
+    <h2>Projects</h2>
+    <div class="entry">
+      <div class="row"><span><b>HelioHub</b><span class="sep">|</span><span class="role">Full-Stack Developer</span></span><span class="date">2025</span></div>
+      <ul>
+        <li>
+          Built a platform for solar-powered charging stations with a Solar Feasibility Tool, the Helios AI assistant (Gemini)
+          and an admin dashboard running on demo data.
+        </li>
+        <li>
+          Next.js 16, TypeScript, Tailwind CSS, Supabase, Gemini API<span class="sep">|</span><span class="nw">helio-hub.vercel.app</span><span class="sep">|</span><span class="nw">github.com/SVG700/HelioHub</span>
+        </li>
+      </ul>
+    </div>
+    <div class="entry">
+      <div class="row">
+        <span><b>NEXORA – AI-Powered Criminal Network Analysis</b><span class="sep">|</span><span class="role">Smart India Hackathon 2026 project</span></span>
+        <span class="tag">Prototype</span>
+      </div>
+      <ul>
+        <li>
+          Developed an investigation-analytics prototype for entity extraction and resolution, network visualisation and
+          spatio-temporal pattern analysis on synthetic FIR, call-detail and transaction data.
+        </li>
+        <li>
+          Internal SIH round: 456 teams → internal hackathon of 150 teams → shortlisted in the top 90.<span class="sep">|</span>React, TypeScript, Vite
+        </li>
+      </ul>
+    </div>
+    <div class="entry">
+      <div class="row">
+        <span><b>PAIMANA Monitoring &amp; Forecasting</b><span class="sep">|</span><span class="role">Backend &amp; Analytics · Python, FastAPI</span></span>
+        <span class="tag">Local prototype</span>
+      </div>
+      <ul>
+        <li>
+          Built a FastAPI service that forecasts infrastructure project progress (1–24 months) and flags delay risk and anomalies.
+        </li>
+        <li>
+          Dataset: ~2,100 Central Sector projects, 11,011 monthly observations from PAIMANA reports (Jul 2025 – Mar 2026).
+        </li>
+      </ul>
+    </div>
+    <div class="entry">
+      <div class="row"><span><b>O' Waste</b><span class="sep">|</span><span class="role">Android Developer</span></span><span class="date">Oct 2021 – Present</span></div>
+      <ul>
+        <li>
+          Building an Android app (Java) that connects restaurants with NGOs to redistribute surplus food, with Firebase OTP auth
+          and Cloud Messaging; Google Maps integration in progress.
+        </li>
+      </ul>
+    </div>
+    <div class="entry">
+      <div class="row"><span><b>PayPerView</b><span class="sep">|</span><span class="role">Team Developer (Web3/Blockchain)</span></span><span class="date">2025</span></div>
+      <ul>
+        <li>
+          Collaborated with Team COREMATES on a decentralised video-ad platform on Algorand in a 24-hour hackathon (RIFT '26).
+        </li>
+      </ul>
+    </div>
+    <p class="entry"><b>More builds:</b> EcoBuddy AI, NyayaLens, StadiumOS AI, CivicMind AI — github.com/SVG700</p>
+
+    <h2>Experience &amp; Leadership</h2>
+    <div class="entry">
+      <div class="row"><span><b>Google Student Ambassador</b><span class="sep">|</span><span class="role">Google Student Ambassador Program</span></span><span class="date">2026 – Present</span></div>
+      <ul>
+        <li>Conducted one online event; publish monthly programme highlights on LinkedIn and Instagram.</li>
+      </ul>
+    </div>
+    <div class="entry">
+      <div class="row"><span><b>Brand Manager Intern</b><span class="sep">|</span><span class="role">The House of Edits</span></span><span class="date">Jul 2025 – Present</span></div>
+      <ul>
+        <li>Plan and run social media branding campaigns, using analytics to refine performance and brand messaging.</li>
+      </ul>
+    </div>
+    <div class="entry">
+      <div class="row"><span><b>Sponsorship Lead</b><span class="sep">|</span><span class="role">InnovateX 4.0, Build Club, Presidency University</span></span><span class="date">Jan 2026 – Apr 2026</span></div>
+      <ul>
+        <li>Led sponsor relations for the university's international tech fest (5,000+ participants); brought in five sponsors.</li>
+      </ul>
+    </div>
+    <div class="entry">
+      <div class="row"><span><b>Student Coordinator</b><span class="sep">|</span><span class="role">DRR Club, Presidency University</span></span><span class="date">Nov 2025 – Present</span></div>
+      <ul>
+        <li>Organised the AgroTech Innovation Challenge 2026.</li>
+      </ul>
+    </div>
+    <div class="entry">
+      <div class="row"><span><b>Campus Ambassador – Marketing Internship</b><span class="sep">|</span><span class="role">Shaastra 2025–26, IIT Madras</span></span><span class="date">Offer Dec 2025</span></div>
+    </div>
+    <div class="entry">
+      <div class="row"><span><b>Campus Ambassador</b><span class="sep">|</span><span class="role">eDC IIT Delhi (BECon '26)</span></span><span class="date">Dec 2025 – Feb 2026</span></div>
+      <ul>
+        <li>Promoted BECon '26 entrepreneurship events on campus and coordinated student outreach.</li>
+      </ul>
+    </div>
+    <div class="entry">
+      <div class="row"><span><b>Co-Founder</b><span class="sep">|</span><span class="role">EV Lowarage</span> <span class="muted">— Early-stage EV-charging venture.</span></span><span class="date">Oct 2025 – Present</span></div>
+    </div>
+
+    <h2>Awards &amp; Recognition</h2>
+    <ul>
+      <li><b>INSPIRE Award</b> – DST, Govt. of India (₹10,000 national grant), Dec 2021 (O' Waste)</li>
+      <li><b>ATL Tinkerpreneur – Top 100 nationally</b>, NITI Aayog, 2021 (O' Waste)</li>
+      <li><b>6th of 350+ teams</b> – 8th Innovative Project Expo (HelioHub)</li>
+      <li><b>7th Position</b> – Ramakrishna Mission Student Innovation Competition (South Zone), 2023</li>
+      <li><b>Semifinalist</b> – RIFT '26 Hackathon, Physics Wallah (PayPerView, Team COREMATES)</li>
+    </ul>
+
+    <h2>Activities &amp; Languages</h2>
+    <div class="plain">
+      <p>
+        <b>Activities:</b> Attended the GSoC community meetup at Google Ananta (GDG Bangalore, Jul 2026); competitive programming,
+        hackathons, CTF (IISc); NCC 'A' Certificate (2022); photo/video editing; community service
+      </p>
+      <p><b>Languages:</b> English (fluent), Kannada (native), Hindi (fluent), Telugu (conversational)</p>
+    </div>
+  </body>
+</html>

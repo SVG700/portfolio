@@ -9,7 +9,7 @@ const STATUS_DOT: Record<ProjectStatus, string> = {
   'Live demo': 'bg-accent',
   'In development': 'bg-amber',
   Prototype: 'bg-ink',
-  Concept: 'border border-dim',
+  'Local prototype': 'border border-ink',
 }
 
 export function Status({ status }: { status: ProjectStatus }) {
@@ -72,7 +72,7 @@ export function ProjectActions({ project, compact = false }: { project: Project;
       {repo && (
         <a href={repo} target="_blank" rel="noopener noreferrer" className={linkCls}>
           <GitHubIcon className="size-3.5" />
-          <span className="link-underline">Code</span>
+          <span className="link-underline">{project.links.repoLabel ?? 'Code'}</span>
           <span className="sr-only"> for {project.name} on GitHub (opens in a new tab)</span>
         </a>
       )}

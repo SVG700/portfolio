@@ -1,42 +1,83 @@
+import { ArrowUpRight } from 'lucide-react'
+import { achievements } from '../data/achievements'
 import { roles } from '../data/experience'
+import { projects } from '../data/projects'
+import { useOpenProject } from '../drawer'
 import { SectionLabel } from './SectionLabel'
 
-export function Experience() {
-  return (
-    <section id="experience" className="py-24 md:py-36">
-      <div className="container-page">
-        <div className="reveal grid gap-6 lg:grid-cols-12 lg:items-end">
-          <div className="lg:col-span-7">
-            <SectionLabel index="05">Experience & leadership</SectionLabel>
-            <h2 className="display-lg mt-6 text-balance">Beyond writing code</h2>
-          </div>
-          <p className="lede max-w-md lg:col-span-5 lg:justify-self-end">
-            Festivals, outreach and student roles — coordinating people, communicating ideas and following through.
-          </p>
-        </div>
+const nameOf = Object.fromEntries(projects.map((p) => [p.id, p.name]))
 
-        <ol className="mt-16 border-t border-line-strong">
-          {roles.map((r) => (
-            <li
-              key={r.title + r.organisation}
-              className="reveal group grid gap-x-10 gap-y-3 border-b border-line py-8 transition-colors md:grid-cols-[1fr_1.1fr] lg:grid-cols-[10rem_1fr_1.15fr]"
-            >
-              <p className="meta flex items-center gap-2 self-start lg:pt-2.5">
-                <span
-                  className={`size-1.5 rounded-full ${r.kind === 'Experience' ? 'bg-accent' : 'border border-muted'}`}
-                  aria-hidden="true"
-                />
-                {r.kind}
-                {r.period && <span>· {r.period}</span>}
-              </p>
-              <div>
-                <h3 className="font-display text-[1.55rem] leading-tight font-semibold tracking-[-0.025em]">{r.title}</h3>
-                <p className="mt-1.5 text-[14.5px] text-ink/75">{r.organisation}</p>
-              </div>
-              <p className="text-[14.5px] leading-relaxed text-muted text-pretty md:pt-1">{r.description}</p>
-            </li>
-          ))}
-        </ol>
+/** Experience & leadership beside recognition — one compact section. */
+export function Experience() {
+  const open = useOpenProject()
+
+  return (
+    <section id="experience" className="border-t border-line bg-bg-alt py-20 md:py-28">
+      <div className="container-page">
+        <SectionLabel index="01">Experience & achievements</SectionLabel>
+        <h2 className="display-lg mt-5 text-balance">Roles and recognition</h2>
+
+        <div className="mt-12 grid gap-14 lg:grid-cols-12 lg:gap-12">
+          <div className="lg:col-span-7">
+            <h3 className="meta text-muted">Experience & leadership</h3>
+            <ol className="mt-3 border-t border-line-strong">
+              {roles.map((r) => (
+                <li key={r.title + r.organisation} className="border-b border-line py-5">
+                  <div className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
+                    <h4 className="font-display text-[1.2rem] leading-tight font-semibold tracking-[-0.02em]">{r.title}</h4>
+                    {r.period && <p className="meta">{r.period}</p>}
+                  </div>
+                  <p className="mt-1 text-[14px] text-ink/75">{r.organisation}</p>
+                  {r.detail && <p className="mt-2 text-[14px] leading-relaxed text-muted text-pretty">{r.detail}</p>}
+                </li>
+              ))}
+            </ol>
+          </div>
+
+          <div className="lg:col-span-5">
+            <h3 className="meta text-muted">Awards & recognition</h3>
+            <ul className="mt-3 border-t border-line-strong">
+              {achievements.map((a) => (
+                <li key={a.title} className="grid grid-cols-[7.5rem_1fr] gap-4 border-b border-line py-5">
+                  <p
+                    className={`font-display leading-none font-semibold tracking-[-0.03em] text-accent ${
+                      a.figure.length > 7 ? 'pt-1 text-[1.05rem]' : 'text-[1.45rem]'
+                    }`}
+                  >
+                    {a.figure}
+                  </p>
+                  <div className="min-w-0">
+                    <h4 className="text-[15px] leading-snug font-medium">{a.title}</h4>
+                    <p className="mt-1 text-[13.5px] leading-relaxed text-muted">
+                      {a.detail}
+                      {a.year && <span className="text-dim"> · {a.year}</span>}
+                    </p>
+                    {a.project && (
+                      <button
+                        type="button"
+                        onClick={() => open(a.project!)}
+                        className="meta mt-2 inline-flex items-center gap-1 text-muted transition-colors hover:text-ink"
+                      >
+                        <span className="link-underline">{nameOf[a.project]}</span>
+                        <ArrowUpRight className="size-3" aria-hidden="true" />
+                      </button>
+                    )}
+                    {a.evidenceUrl && (
+                      <a
+                        href={a.evidenceUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="meta mt-2 ml-4 inline-flex items-center gap-1 text-muted hover:text-ink"
+                      >
+                        <span className="link-underline">Certificate</span>
+                      </a>
+                    )}
+                  </div>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
       </div>
     </section>
   )

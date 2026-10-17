@@ -2,21 +2,21 @@
 
 export const profile = {
   name: 'Samhith V Gupta',
-  firstName: 'Samhith',
-  label: 'CS Student · Developer · Builder',
   headline: 'Building technology that solves real-world problems.',
-  intro:
-    "I'm Samhith, a Computer Science student, developer, and aspiring engineer exploring AI, software development, and emerging technologies. I enjoy turning ideas into working products and building solutions with real-world applications.",
-  location: 'Bengaluru, India',
+  summary:
+    'Computer Science undergraduate who builds full-stack web, Android and AI-integrated applications — from hackathon prototypes to live demos.',
+  degree: 'B.Tech, Computer Science and Engineering',
   university: 'Presidency University, Bengaluru',
-  email: 'sammithvgupta@gmail.com',
+  currentRole: 'Google Student Ambassador · 2026 – Present',
+  location: 'Bengaluru, India',
+  email: 'samhithvgupta@gmail.com',
   links: {
     github: 'https://github.com/SVG700',
-    linkedin: 'https://www.linkedin.com/in/samhith-v-gupta',
+    linkedin: 'https://linkedin.com/in/samhith-v-gupta',
   },
   /**
    * Resume lives at public/resume.pdf and is served at /resume.pdf.
-   * The button checks that a real PDF exists before enabling itself.
+   * Resume buttons only render once a real PDF is there.
    */
   resumePath: '/resume.pdf',
   /** Keep false unless you explicitly want an "Open to internships" badge. */
@@ -26,50 +26,44 @@ export const profile = {
    * TODO: once the "portfolio" repo exists and the APK is attached to a GitHub
    * Release, set this to the release URL, e.g.
    *   'https://github.com/SVG700/portfolio/releases/latest'
-   * While it is null the button renders disabled ("Coming soon").
+   * While it is null the link is not rendered at all.
    */
   androidAppUrl: null as string | null,
 } as const
 
-export const about = {
-  paragraphs: [
-    "I'm a Computer Science and Engineering student at Presidency University, Bengaluru. I'm interested in building software that goes beyond demonstrations and addresses practical problems.",
-    'My work spans AI-powered applications, web development, Android applications, data-driven systems and emerging technologies such as blockchain. I learn best by building — experimenting with new tools and collaborating on projects that combine technical thinking with real-world utility.',
-    "Alongside development, I've explored entrepreneurship, student innovation programmes and event leadership. Those experiences taught me that useful technology needs more than code: it needs an understanding of people, clear communication and consistent execution.",
-  ],
-  interests: [
-    'Artificial intelligence and applied machine learning',
-    'Full-stack and application development',
-    'Data-driven software systems',
-    'Blockchain and Web3',
-    'Entrepreneurship and social-impact technology',
-    'Developer communities and collaborative innovation',
-  ],
-}
-
 export type Education = {
-  degree: string
   institution: string
-  period?: string
+  degree: string
+  period: string
   note?: string
 }
 
 export const education: Education[] = [
   {
-    degree: 'B.Tech, Computer Science and Engineering',
     institution: 'Presidency University, Bengaluru',
-    period: '2025 – 2029',
+    degree: 'B.Tech, Computer Science and Engineering',
+    period: 'Aug 2025 – 2029 (expected)',
+    note: 'Class Representative',
   },
   {
-    degree: 'School education',
-    institution: 'Sri Ramakrishna Vidyashala, Mysuru',
+    institution: 'Sri Ramakrishna Vidyashala, Mysore',
+    degree: 'High School & Pre-University (PCMC)',
+    period: 'Apr 2021 – Mar 2025',
   },
 ]
 
-export const roleFit = [
-  'Software Engineering Intern',
-  'Frontend / Full-Stack Developer Intern',
-  'AI Application Development Intern',
-  'Android Development Intern',
-  'Developer & innovation programmes',
+/** From the resume. */
+export const activities = [
+  'Attended the GSoC community meetup at Google Ananta, Bengaluru — organised by GDG Bangalore (Jul 2026)',
+  'Competitive programming, hackathons and CTF (IISc)',
+  "NCC 'A' Certificate (2022)",
+  'Photo and video editing',
+  'Community service',
+]
+
+export const languages = [
+  { name: 'English', level: 'fluent' },
+  { name: 'Kannada', level: 'native' },
+  { name: 'Hindi', level: 'fluent' },
+  { name: 'Telugu', level: 'conversational' },
 ]

@@ -36,3 +36,6 @@ signing.properties
 *.apk
 *.aab
 release/
+
+# Resume drafts (the approved copy is published as public/resume.pdf)
+resume/*.pdf

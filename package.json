@@ -11,7 +11,8 @@
     "android:sync": "npm run build && cap sync android",
     "android:open": "cap open android",
     "android:assets": "capacitor-assets generate --android --iconBackgroundColor #0b0b0c --iconBackgroundColorDark #0b0b0c --splashBackgroundColor #0b0b0c --splashBackgroundColorDark #0b0b0c",
-    "apk": "node scripts/build-apk.mjs"
+    "apk": "node scripts/build-apk.mjs",
+    "resume": "node scripts/build-resume.mjs"
   },
   "dependencies": {
     "@capacitor/android": "^8.5.3",

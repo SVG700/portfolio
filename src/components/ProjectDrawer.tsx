@@ -90,7 +90,7 @@ export function ProjectDrawer({ projectId, onClose }: Props) {
                 <p className="mt-6 text-[1.1rem] leading-snug text-ink text-pretty">{project.problem}</p>
 
                 {project.visual && (
-                  <div className="mt-8">
+                  <div className="mt-8 hidden md:block">
                     <ProjectVisual project={project} eager />
                   </div>
                 )}
@@ -99,18 +99,6 @@ export function ProjectDrawer({ projectId, onClose }: Props) {
                   <Row label="What it does">{project.summary}</Row>
                   {project.role && <Row label="My role">{project.role}</Row>}
                   {project.context && <Row label="Context">{project.context}</Row>}
-                  {project.approach && (
-                    <Row label="Approach">
-                      <ol className="space-y-3">
-                        {project.approach.map((a, i) => (
-                          <li key={i} className="grid grid-cols-[1.25rem_1fr]">
-                            <span className="meta pt-0.5 text-accent">{i + 1}</span>
-                            <span>{a}</span>
-                          </li>
-                        ))}
-                      </ol>
-                    </Row>
-                  )}
                   <Row label="Features">
                     <ul className="space-y-1.5">
                       {project.features.map((f) => (
@@ -149,7 +137,7 @@ export function ProjectDrawer({ projectId, onClose }: Props) {
               )}
               {project.links.repo && (
                 <a href={project.links.repo} target="_blank" rel="noopener noreferrer" className="btn-ghost py-2.5">
-                  <GitHubIcon /> View code<span className="sr-only"> (opens in a new tab)</span>
+                  <GitHubIcon /> {project.links.repoLabel ?? 'View code'}<span className="sr-only"> (opens in a new tab)</span>
                 </a>
               )}
               {!project.links.demo && !project.links.repo && (
