@@ -54,6 +54,8 @@ npm run android:open   # open the Android project in Android Studio
 npm run android:assets # regenerate icon + splash from assets/*.png
 ```
 
+Launch: on Android 12+ the system splash shows an animated SG monogram (`android/app/src/main/res/drawable/splash_avd.xml` + `splash_sg.xml`, glyphs from Bricolage Grotesque), then fades to the site. Older Android versions show the static splash.
+
 App-only behaviour lives in `src/native.ts` (status bar, back button, opening external links in the phone's browser / mail app) and `src/platform.ts` (`isNativeApp`, back-button handlers).
 
 **Requirements on the build machine**

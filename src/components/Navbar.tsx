@@ -4,6 +4,7 @@ import { profile } from '../data/profile'
 import { useActiveSection } from '../hooks'
 import { EASE, itemVariants } from '../motion-shared'
 import { registerBackHandler } from '../platform'
+import { LogoMark } from './LogoMark'
 import { ArrowUpRight } from './icons'
 
 const NAV = [
@@ -70,8 +71,13 @@ export function Navbar() {
         Skip to content
       </a>
       <nav className="container-page flex h-16 items-center justify-between gap-6" aria-label="Primary">
-        <a href="#top" onClick={close} className="font-display text-[17px] font-semibold tracking-[-0.02em]">
-          Samhith V Gupta
+        <a
+          href="#top"
+          onClick={close}
+          className="group inline-flex items-center gap-3 font-display text-[17px] font-semibold tracking-[-0.02em]"
+        >
+          <LogoMark className="h-[17px] w-auto transition-transform duration-300 group-hover:scale-105" />
+          <span className="transition-colors group-hover:text-accent">Samhith V Gupta</span>
           <span className="sr-only"> — back to top</span>
         </a>
 
@@ -83,7 +89,7 @@ export function Navbar() {
                 <a
                   href={`#${item.id}`}
                   aria-current={isActive ? 'true' : undefined}
-                  className={`relative py-2 text-[14px] transition-colors ${isActive ? 'text-ink' : 'text-muted hover:text-ink'}`}
+                  className={`nav-link relative py-2 text-[14px] transition-colors ${isActive ? 'text-ink' : 'text-muted hover:text-ink'}`}
                 >
                   {item.label}
                 </a>

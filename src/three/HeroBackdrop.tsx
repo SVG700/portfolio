@@ -20,7 +20,14 @@ function webglAvailable() {
  * we're not in the Android app; it loads after the page is idle and stops
  * rendering whenever it's off-screen or the tab is hidden.
  */
-export function HeroBackdrop({ className = '' }: { className?: string }) {
+export function HeroBackdrop({
+  className = '',
+  media = '(min-width: 768px)',
+}: {
+  className?: string
+  /** Screen widths where this instance is visible; it only loads/renders there. */
+  media?: string
+}) {
   const reduce = useReducedMotion()
   const box = useRef<HTMLDivElement>(null)
   const pointer = useRef({ x: 0, y: 0 })
@@ -35,14 +42,17 @@ export function HeroBackdrop({ className = '' }: { className?: string }) {
   // fully loaded and the browser is idle, so it never competes with first paint.
   useEffect(() => {
     if (reduce || isNativeApp || !webglAvailable()) return
-    // The hero's right column (and this backdrop) only shows from tablet width
-    // up — never download three.js for a phone layout.
-    const wide = window.matchMedia('(min-width: 768px)')
+    // Only where this instance is actually on screen (tablet or desktop
+    // layout) — never download three.js for a phone layout, and never run
+    // two scenes at once. Crossing the breakpoint mounts/unmounts it.
+    const mq = window.matchMedia(media)
     let cancelled = false
+    let idleDone = false
+    const sync = () => !cancelled && idleDone && setWant3d(mq.matches)
+    mq.addEventListener('change', sync)
     const start = () => {
-      if (cancelled) return
-      if (wide.matches) setWant3d(true)
-      else wide.addEventListener('change', () => wide.matches && !cancelled && setWant3d(true), { once: true })
+      idleDone = true
+      sync()
     }
     const w = window as Window & { requestIdleCallback?: (cb: () => void, o?: { timeout: number }) => number }
     const whenIdle = () => (w.requestIdleCallback ? w.requestIdleCallback(start, { timeout: 4000 }) : window.setTimeout(start, 1500))
@@ -50,9 +60,10 @@ export function HeroBackdrop({ className = '' }: { className?: string }) {
     else window.addEventListener('load', whenIdle, { once: true })
     return () => {
       cancelled = true
+      mq.removeEventListener('change', sync)
       window.removeEventListener('load', whenIdle)
     }
-  }, [reduce])
+  }, [reduce, media])
 
   // Pause when off-screen or when the tab is hidden.
   useEffect(() => {

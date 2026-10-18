@@ -57,7 +57,8 @@ export function ProjectVisual({ project, eager = false }: { project: Project; ea
 export function ProjectActions({ project, compact = false }: { project: Project; compact?: boolean }) {
   const open = useOpenProject()
   const { repo, demo } = project.links
-  const linkCls = 'inline-flex items-center gap-1.5 text-[14px] text-muted transition-colors hover:text-ink'
+  const linkCls =
+    'group/link inline-flex items-center gap-1.5 text-[14px] text-muted transition-colors hover:text-ink [&>svg]:transition-transform [&>svg]:duration-300 hover:[&>svg:last-child]:translate-x-0.5 hover:[&>svg:last-child]:-translate-y-0.5'
   return (
     <div className={`flex flex-wrap items-center ${compact ? 'gap-x-5 gap-y-2' : 'gap-x-6 gap-y-3'}`}>
       <button

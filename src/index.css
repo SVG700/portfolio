@@ -84,6 +84,15 @@
   letter-spacing: -0.045em;
   font-variation-settings: 'opsz' 96;
 }
+/* Hero headline: large, but sized to sit beside the portrait. */
+@utility display-hero {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: clamp(2.45rem, 5.3vw, 4.6rem);
+  line-height: 0.98;
+  letter-spacing: -0.042em;
+  font-variation-settings: 'opsz' 96;
+}
 @utility display-lg {
   font-family: var(--font-display);
   font-weight: 600;
@@ -126,13 +135,17 @@
 
 /* ---------- Controls ---------- */
 @utility btn {
-  @apply inline-flex items-center justify-center gap-2 rounded-full px-5 py-3 text-[14px] font-medium whitespace-nowrap transition-[background-color,color,border-color,transform] duration-200 active:scale-[0.98];
+  @apply inline-flex items-center justify-center gap-2 rounded-full px-5 py-3 text-[14px] font-medium whitespace-nowrap transition-[background-color,color,border-color,transform,translate,box-shadow] duration-200 active:scale-[0.98];
 }
 @utility btn-primary {
-  @apply btn bg-accent text-accent-ink hover:bg-[#e2fa8c];
+  @apply btn bg-accent text-accent-ink hover:-translate-y-px hover:bg-[#e2fa8c] hover:shadow-[0_8px_24px_-8px_rgb(212_243_106/0.55)];
 }
 @utility btn-ghost {
-  @apply btn border border-line-strong text-ink hover:border-white/35 hover:bg-white/[0.04];
+  @apply btn border border-line-strong text-ink hover:-translate-y-px hover:border-accent/40 hover:bg-white/[0.04];
+}
+/* Small icon+label links in the hero: colour shift and a nudge of the icon. */
+@utility hero-link {
+  @apply inline-flex items-center gap-2 transition-colors duration-200 hover:text-ink [&>svg]:transition-transform [&>svg]:duration-300 hover:[&>svg]:-translate-y-0.5;
 }
 @utility link-underline {
   background-image: linear-gradient(currentColor, currentColor);
@@ -193,6 +206,17 @@
     opacity: 1;
   }
 }
+@keyframes breathe {
+  0%,
+  100% {
+    opacity: 0.55;
+    transform: scale(0.97);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.03);
+  }
+}
 @keyframes float-soft {
   0%,
   100% {
@@ -228,6 +252,19 @@
   animation: float-soft 7s ease-in-out infinite;
 }
 
+/* Soft lime light behind the hero portrait — a gradient (no blur filter),
+   breathing via opacity/transform only. */
+.portrait-glow::before {
+  content: '';
+  position: absolute;
+  inset: -16%;
+  z-index: -1;
+  border-radius: 50%;
+  background: radial-gradient(closest-side, rgb(212 243 106 / 0.2), rgb(212 243 106 / 0.06) 55%, transparent 75%);
+  animation: breathe 7s ease-in-out infinite;
+  pointer-events: none;
+}
+
 /* Cursor-follow highlight for cards (desktop pointers only; see Work.tsx). */
 .spotlight {
   position: relative;
@@ -247,6 +284,57 @@
 @media (hover: hover) and (pointer: fine) {
   .spotlight:hover::before {
     opacity: 1;
+  }
+}
+
+/* Nav links: a faint underline grows on hover (the lime bar marks the active one). */
+.nav-link::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 6px;
+  height: 1px;
+  background: rgb(255 255 255 / 0.35);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.35s var(--ease-out-expo);
+}
+.nav-link:hover::after,
+.nav-link:focus-visible::after {
+  transform: scaleX(1);
+}
+.nav-link[aria-current='true']::after {
+  display: none;
+}
+
+/* Skills: the group's row lights up on hover; each skill can be picked out. */
+.skill-row {
+  position: relative;
+}
+.skill-row::before {
+  content: '';
+  position: absolute;
+  inset: 0 -12px;
+  border-radius: 10px;
+  background: linear-gradient(90deg, rgb(212 243 106 / 0.05), transparent 70%);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.5s var(--ease-out-expo);
+  pointer-events: none;
+}
+.skill {
+  transition: color 0.2s ease;
+}
+@media (hover: hover) and (pointer: fine) {
+  .skill-row:hover::before {
+    transform: scaleX(1);
+  }
+  .skill-row:hover dt {
+    color: var(--color-accent);
+  }
+  .skill:hover {
+    color: var(--color-accent);
   }
 }
 
@@ -340,7 +428,8 @@ dialog.drawer.is-closing::backdrop {
   background-color: var(--color-bg);
 }
 .native-app .flow-dash,
-.native-app .float-soft {
+.native-app .float-soft,
+.native-app .portrait-glow::before {
   animation: none;
 }
 .native-app .spotlight::before,

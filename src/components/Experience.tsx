@@ -14,8 +14,14 @@ const nameOf = Object.fromEntries(projects.map((p) => [p.id, p.name]))
 // inherit "hidden"/"show" from the StaggerItem around them. With reduced
 // motion only the fade runs.
 const flip = {
-  hidden: { rotateX: -85, opacity: 0 },
-  show: { rotateX: 0, opacity: 1, transition: { duration: 0.75, ease: EASE, delay: 0.1 } },
+  hidden: { rotateX: -55, y: 6, opacity: 0 },
+  show: { rotateX: 0, y: 0, opacity: 1, transition: { duration: 0.7, ease: EASE, delay: 0.08 } },
+}
+
+// Timeline dot that pops in with its entry.
+const dot = {
+  hidden: { scale: 0 },
+  show: { scale: 1, transition: { type: 'spring' as const, stiffness: 420, damping: 18, delay: 0.1 } },
 }
 
 /** Experience & leadership beside recognition — one compact section. */
@@ -33,22 +39,38 @@ export function Experience() {
         <div className="mt-12 grid gap-14 lg:grid-cols-12 lg:gap-12">
           <div className="lg:col-span-7">
             <h3 className="meta text-muted">Experience & leadership</h3>
-            <Stagger as="ol" className="mt-3 border-t border-line-strong">
-              {roles.map((r) => (
-                <StaggerItem key={r.title + r.organisation} className="border-b border-line py-5">
-                  <div className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
-                    <h4 className="font-display text-[1.2rem] leading-tight font-semibold tracking-[-0.02em]">{r.title}</h4>
-                    {r.period && <p className="meta">{r.period}</p>}
-                  </div>
-                  <p className="mt-1 text-[14px] text-ink/75">{r.organisation}</p>
-                  {r.detail && (
-                    <p className="mt-2 text-[14px] leading-relaxed text-muted text-pretty">
-                      <CountText text={r.detail} />
-                    </p>
-                  )}
-                </StaggerItem>
-              ))}
-            </Stagger>
+            <div className="relative mt-3">
+              {/* Timeline rail: draws down as the list enters the viewport. */}
+              <m.span
+                aria-hidden="true"
+                className="absolute top-0 bottom-0 left-[3px] w-px origin-top bg-gradient-to-b from-accent/60 via-line-strong to-transparent"
+                initial={{ scaleY: 0 }}
+                whileInView={{ scaleY: 1 }}
+                viewport={{ once: true, amount: 0.1 }}
+                transition={{ duration: 1.4, ease: EASE }}
+              />
+              <Stagger as="ol" className="border-t border-line-strong">
+                {roles.map((r) => (
+                  <StaggerItem key={r.title + r.organisation} className="relative border-b border-line py-5 pl-7">
+                    <m.span
+                      aria-hidden="true"
+                      variants={dot}
+                      className="absolute top-[1.85rem] left-0 size-[7px] rounded-full border border-accent bg-bg"
+                    />
+                    <div className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
+                      <h4 className="font-display text-[1.2rem] leading-tight font-semibold tracking-[-0.02em]">{r.title}</h4>
+                      {r.period && <p className="meta">{r.period}</p>}
+                    </div>
+                    <p className="mt-1 text-[14px] text-ink/75">{r.organisation}</p>
+                    {r.detail && (
+                      <p className="mt-2 text-[14px] leading-relaxed text-muted text-pretty">
+                        <CountText text={r.detail} />
+                      </p>
+                    )}
+                  </StaggerItem>
+                ))}
+              </Stagger>
+            </div>
           </div>
 
           <div className="lg:col-span-5">

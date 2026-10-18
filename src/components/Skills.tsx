@@ -19,13 +19,13 @@ export function Skills() {
 
         <Stagger as="dl" className="mt-10 border-t border-line-strong">
           {skillGroups.map((g) => (
-            <StaggerItem as="div" key={g.title} className="grid gap-2 border-b border-line py-5 md:grid-cols-[11rem_1fr_auto] md:items-baseline md:gap-8">
+            <StaggerItem as="div" key={g.title} className="skill-row grid gap-2 border-b border-line py-5 md:grid-cols-[11rem_1fr_auto] md:items-baseline md:gap-8">
               <dt className="meta text-muted">{g.title}</dt>
               <dd className="text-[1.05rem] leading-relaxed">
                 {g.skills.map((s, i) => (
                   <Fragment key={s.name}>
                     <span className="whitespace-nowrap">
-                      <span className={s.level ? 'text-muted' : 'text-ink'}>{s.name}</span>
+                      <span className={`skill ${s.level ? 'text-muted' : 'text-ink'}`}>{s.name}</span>
                       {s.level && <span className="meta ml-1.5 text-amber">({s.level})</span>}
                       {i < g.skills.length - 1 && <span className="text-dim">,</span>}
                     </span>{' '}

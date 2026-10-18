@@ -48,5 +48,5 @@ export async function initNative() {
     true,
   )
 
-  await SplashScreen.hide()
+  await SplashScreen.hide({ fadeOutDuration: 250 })
 }

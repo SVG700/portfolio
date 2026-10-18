@@ -14,8 +14,11 @@ const config: CapacitorConfig = {
   },
   plugins: {
     SplashScreen: {
-      launchShowDuration: 600,
+      // Long enough for the 0.9 s animated SG icon (Android 12+); the app
+      // hides it earlier, as soon as the web content is ready (src/native.ts).
+      launchShowDuration: 900,
       launchAutoHide: true,
+      launchFadeOutDuration: 250,
       backgroundColor: '#0b0b0c',
       showSpinner: false,
       androidScaleType: 'CENTER_CROP',
