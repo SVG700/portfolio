@@ -250,6 +250,27 @@
   }
 }
 
+/* Soft specular sheen that follows the pointer on tilting surfaces. */
+.sheen {
+  position: relative;
+}
+.sheen::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: radial-gradient(260px circle at var(--mx, 50%) var(--my, 50%), rgb(255 255 255 / 0.07), transparent 60%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+  z-index: 2;
+}
+@media (hover: hover) and (pointer: fine) {
+  .sheen:hover::after {
+    opacity: 1;
+  }
+}
+
 .flow-dash {
   stroke-dasharray: 3 5;
   animation: dash 1.6s linear infinite;
@@ -322,7 +343,8 @@ dialog.drawer.is-closing::backdrop {
 .native-app .float-soft {
   animation: none;
 }
-.native-app .spotlight::before {
+.native-app .spotlight::before,
+.native-app .sheen::after {
   display: none;
 }
 

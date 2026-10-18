@@ -4,6 +4,7 @@ import { ArrowDown, GitHubIcon, LinkedInIcon, Mail } from './icons'
 import { ResumeButton } from './ResumeButton'
 import { Portrait } from './Portrait'
 import { WorkCollage } from './WorkCollage'
+import { HeroBackdrop } from '../three/HeroBackdrop'
 
 const LINES = [
   { text: 'Building technology', className: '' },
@@ -12,7 +13,7 @@ const LINES = [
 
 export function Hero() {
   return (
-    <section id="top" className="relative pt-24 pb-16 md:pt-32 md:pb-24" style={{ marginTop: 'var(--safe-top)' }}>
+    <section id="top" className="relative overflow-x-clip pt-24 pb-16 md:pt-32 md:pb-24" style={{ marginTop: 'var(--safe-top)' }}>
       <div className="container-page">
         <div className="enter flex flex-wrap items-center justify-between gap-x-6 gap-y-2 border-b border-line pb-5">
           <p className="flex flex-wrap items-center gap-x-3 gap-y-1 text-[15px]">
@@ -101,7 +102,9 @@ export function Hero() {
           </div>
 
           {/* Real screenshots of live builds — tablet and up only, so they are never shown illegibly small. */}
-          <div className="hidden md:block lg:col-span-7">
+          <div className="relative isolate hidden md:block lg:col-span-7">
+            {/* 3D network behind the screenshots (tablet and up; static image in the app / reduced motion). */}
+            <HeroBackdrop className="absolute top-1/2 left-1/2 -z-10 aspect-square w-[118%] -translate-x-1/2 -translate-y-[46%] opacity-80 [mask-image:radial-gradient(closest-side,#000_62%,transparent)]" />
             <WorkCollage />
             <p className="meta mt-4">Live builds — HelioHub, NyayaLens, PayPerView</p>
           </div>

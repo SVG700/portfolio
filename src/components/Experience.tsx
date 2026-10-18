@@ -2,11 +2,21 @@ import { achievements } from '../data/achievements'
 import { roles } from '../data/experience'
 import { projects } from '../data/projects'
 import { useOpenProject } from '../drawer'
+import { m } from 'framer-motion'
 import { CountText, CountUp, Reveal, Stagger, StaggerItem } from '../motion'
+import { EASE } from '../motion-shared'
 import { SectionLabel } from './SectionLabel'
 import { ArrowUpRight } from './icons'
 
 const nameOf = Object.fromEntries(projects.map((p) => [p.id, p.name]))
+
+// Award figures flip up into place (rotateX) as the list scrolls in. They
+// inherit "hidden"/"show" from the StaggerItem around them. With reduced
+// motion only the fade runs.
+const flip = {
+  hidden: { rotateX: -85, opacity: 0 },
+  show: { rotateX: 0, opacity: 1, transition: { duration: 0.75, ease: EASE, delay: 0.1 } },
+}
 
 /** Experience & leadership beside recognition — one compact section. */
 export function Experience() {
@@ -51,7 +61,13 @@ export function Experience() {
                       a.figure.length > 7 ? 'pt-1 text-[1.05rem]' : 'text-[1.45rem]'
                     }`}
                   >
-                    <CountUp text={a.figure} />
+                    <m.span
+                      className="inline-block origin-bottom"
+                      style={{ transformPerspective: 600 }}
+                      variants={flip}
+                    >
+                      <CountUp text={a.figure} />
+                    </m.span>
                   </p>
                   <div className="min-w-0">
                     <h4 className="text-[15px] leading-snug font-medium">{a.title}</h4>

@@ -1,8 +1,8 @@
 import { projects, type Project } from '../data/projects'
 import { Reveal, Stagger, StaggerItem } from '../motion'
-import { usePointerFx } from '../motion-shared'
 import { ProjectActions, ProjectVisual, Stack, Status } from './projectBits'
 import { SectionLabel } from './SectionLabel'
+import { Depth, Tilt } from './Tilt'
 
 /* Featured: text beside an interface preview. The preview is tablet+ only —
    on phones a scaled-down interface would be unreadable. */
@@ -27,9 +27,12 @@ function Featured({ p, flip }: { p: Project; flip: boolean }) {
         </div>
       </div>
       <div className="hidden md:block lg:col-span-7">
-        <div className="transition-transform duration-700 ease-[var(--ease-out-expo)] group-hover/feature:-translate-y-1 group-hover/feature:scale-[1.012]">
-          <ProjectVisual project={p} />
-        </div>
+        {/* Preview tilts toward the cursor; the frame floats a little in front of it. */}
+        <Tilt max={5} className="sheen rounded-[10px]">
+          <Depth z={18}>
+            <ProjectVisual project={p} />
+          </Depth>
+        </Tilt>
       </div>
     </article>
   )
@@ -37,20 +40,12 @@ function Featured({ p, flip }: { p: Project; flip: boolean }) {
 
 /* Compact card for the rest — no thumbnails, so the grid stays short and legible. */
 function Card({ p }: { p: Project }) {
-  const fx = usePointerFx()
   return (
-    <article
-      className="spotlight flex h-full flex-col rounded-2xl border border-line bg-surface p-5 transition-[transform,border-color] duration-300 ease-[var(--ease-out-expo)] hover:-translate-y-1 hover:border-accent/30 md:p-6"
+    <Tilt
+      as="article"
+      max={7}
+      className="spotlight sheen flex h-full flex-col rounded-2xl border border-line bg-surface p-5 transition-[translate,border-color] duration-300 ease-[var(--ease-out-expo)] hover:-translate-y-1 hover:border-accent/30 md:p-6"
       aria-labelledby={`${p.id}-h`}
-      onPointerMove={
-        fx
-          ? (e) => {
-              const r = e.currentTarget.getBoundingClientRect()
-              e.currentTarget.style.setProperty('--mx', `${e.clientX - r.left}px`)
-              e.currentTarget.style.setProperty('--my', `${e.clientY - r.top}px`)
-            }
-          : undefined
-      }
     >
       <div className="flex flex-wrap items-center justify-between gap-x-3 gap-y-1">
         <p className="meta">{p.category}</p>
@@ -67,7 +62,7 @@ function Card({ p }: { p: Project }) {
           <ProjectActions project={p} compact />
         </div>
       </div>
-    </article>
+    </Tilt>
   )
 }
 
