@@ -1,6 +1,7 @@
 import { m, useMotionValue, useSpring, useTransform, type MotionValue } from 'framer-motion'
 import type { ReactNode } from 'react'
 import { projects } from '../data/projects'
+import { ClipReveal } from './ClipReveal'
 import { usePointerFx } from '../motion-shared'
 
 type Shot = { id: string; className: string; delay: number; depth: number }
@@ -30,21 +31,23 @@ const SHOTS: Shot[] = [
 
 export function Frame({ src, alt, caption, eager = false }: { src: string; alt: string; caption: string; eager?: boolean }) {
   return (
-    <figure className="overflow-hidden rounded-[10px] border border-line-strong bg-surface shadow-[0_30px_60px_-20px_rgb(0_0_0/0.8)]">
-      <figcaption className="flex items-center gap-2 border-b border-line bg-raised px-3 py-1.5">
-        <span className="size-1.5 rounded-full bg-accent" aria-hidden="true" />
-        <span className="truncate font-mono text-[10.5px] text-muted">{caption}</span>
-      </figcaption>
-      <img
-        src={src}
-        alt={alt}
-        width={1280}
-        height={800}
-        loading={eager ? 'eager' : 'lazy'}
-        decoding="async"
-        className="block aspect-[16/10] w-full object-cover object-top"
-      />
-    </figure>
+    <ClipReveal>
+      <figure className="overflow-hidden rounded-[10px] border border-line-strong bg-surface shadow-[0_30px_60px_-20px_rgb(0_0_0/0.8)]">
+        <figcaption className="flex items-center gap-2 border-b border-line bg-raised px-3 py-1.5">
+          <span className="size-1.5 rounded-full bg-accent" aria-hidden="true" />
+          <span className="truncate font-mono text-[10.5px] text-muted">{caption}</span>
+        </figcaption>
+        <img
+          src={src}
+          alt={alt}
+          width={1280}
+          height={800}
+          loading={eager ? 'eager' : 'lazy'}
+          decoding="async"
+          className="block aspect-[16/10] w-full object-cover object-top"
+        />
+      </figure>
+    </ClipReveal>
   )
 }
 

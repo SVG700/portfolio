@@ -2,11 +2,13 @@ import { achievements } from '../data/achievements'
 import { roles } from '../data/experience'
 import { projects } from '../data/projects'
 import { useOpenProject } from '../drawer'
-import { m } from 'framer-motion'
+import { m, useScroll, useSpring } from 'framer-motion'
+import { useRef } from 'react'
 import { CountText, CountUp, Reveal, Stagger, StaggerItem } from '../motion'
-import { EASE } from '../motion-shared'
+import { EASE, useMotionAllowed } from '../motion-shared'
 import { SectionLabel } from './SectionLabel'
 import { ArrowUpRight } from './icons'
+import { AnimatedHeading } from './AnimatedHeading'
 
 const nameOf = Object.fromEntries(projects.map((p) => [p.id, p.name]))
 
@@ -18,36 +20,41 @@ const flip = {
   show: { rotateX: 0, y: 0, opacity: 1, transition: { duration: 0.7, ease: EASE, delay: 0.08 } },
 }
 
-// Timeline dot that pops in with its entry.
+// Timeline dot that appears with its entry; its lime core lights up when the
+// scroll-drawn rail reaches it (see `lit` below).
 const dot = {
   hidden: { scale: 0 },
-  show: { scale: 1, transition: { type: 'spring' as const, stiffness: 420, damping: 18, delay: 0.1 } },
+  show: { scale: 1, transition: { duration: 0.4, ease: EASE, delay: 0.1 } },
 }
+const LIT_AT = { once: true, margin: '0px 0px -45% 0px' } as const
 
 /** Experience & leadership beside recognition — one compact section. */
 export function Experience() {
   const open = useOpenProject()
+  const allowed = useMotionAllowed()
+  const timeline = useRef<HTMLDivElement>(null)
+  // The rail draws in step with scrolling through the list (no scroll hijack).
+  const { scrollYProgress } = useScroll({ target: timeline, offset: ['start 80%', 'end 55%'] })
+  const rail = useSpring(scrollYProgress, { stiffness: 140, damping: 30, restDelta: 0.001 })
 
   return (
     <section id="experience" className="border-t border-line bg-bg-alt py-20 md:py-28">
       <div className="container-page">
         <Reveal>
           <SectionLabel index="01">Experience & achievements</SectionLabel>
-          <h2 className="display-lg mt-5 text-balance">Roles and recognition</h2>
         </Reveal>
+        <AnimatedHeading text="Roles and recognition" keyword="recognition" className="display-lg mt-5 text-balance" />
 
         <div className="mt-12 grid gap-14 lg:grid-cols-12 lg:gap-12">
           <div className="lg:col-span-7">
             <h3 className="meta text-muted">Experience & leadership</h3>
-            <div className="relative mt-3">
-              {/* Timeline rail: draws down as the list enters the viewport. */}
+            <div ref={timeline} className="relative mt-3">
+              {/* Faint track, plus the lime rail that draws as you scroll. */}
+              <span aria-hidden="true" className="absolute top-0 bottom-0 left-[3px] w-px bg-line" />
               <m.span
                 aria-hidden="true"
-                className="absolute top-0 bottom-0 left-[3px] w-px origin-top bg-gradient-to-b from-accent/60 via-line-strong to-transparent"
-                initial={{ scaleY: 0 }}
-                whileInView={{ scaleY: 1 }}
-                viewport={{ once: true, amount: 0.1 }}
-                transition={{ duration: 1.4, ease: EASE }}
+                className="absolute top-0 bottom-0 left-[3px] w-px origin-top bg-accent/70"
+                style={{ scaleY: allowed ? rail : 1 }}
               />
               <Stagger as="ol" className="border-t border-line-strong">
                 {roles.map((r) => (
@@ -56,7 +63,15 @@ export function Experience() {
                       aria-hidden="true"
                       variants={dot}
                       className="absolute top-[1.85rem] left-0 size-[7px] rounded-full border border-accent bg-bg"
-                    />
+                    >
+                      <m.span
+                        className="absolute inset-0 rounded-full bg-accent"
+                        initial={{ opacity: allowed ? 0 : 1 }}
+                        whileInView={{ opacity: 1 }}
+                        viewport={LIT_AT}
+                        transition={{ duration: 0.4, ease: EASE }}
+                      />
+                    </m.span>
                     <div className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
                       <h4 className="font-display text-[1.2rem] leading-tight font-semibold tracking-[-0.02em]">{r.title}</h4>
                       {r.period && <p className="meta">{r.period}</p>}

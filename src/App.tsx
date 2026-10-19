@@ -7,6 +7,7 @@ import { Navbar } from './components/Navbar'
 import { ProjectDrawer } from './components/ProjectDrawer'
 import { ScrollProgress } from './components/ScrollProgress'
 import { Skills } from './components/Skills'
+import { TechMarquee } from './components/TechMarquee'
 import { Work } from './components/Work'
 import { DrawerContext } from './drawer'
 import { MotionProvider } from './motion'
@@ -23,6 +24,7 @@ export default function App() {
           <Hero />
           <Experience />
           <Work />
+          <TechMarquee />
           <Skills />
           <Education />
         </main>

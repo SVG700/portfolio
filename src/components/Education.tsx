@@ -1,6 +1,7 @@
 import { activities, education, languages } from '../data/profile'
 import { Reveal } from '../motion'
 import { SectionLabel } from './SectionLabel'
+import { AnimatedHeading } from './AnimatedHeading'
 
 export function Education() {
   return (
@@ -8,8 +9,8 @@ export function Education() {
       <div className="container-page">
         <Reveal>
           <SectionLabel index="04">Education & activities</SectionLabel>
-          <h2 className="display-lg mt-5">Background</h2>
         </Reveal>
+        <AnimatedHeading text="Background" keyword="Background" className="display-lg mt-5" />
 
         <div className="mt-10 grid gap-12 lg:grid-cols-12 lg:gap-12">
           <Reveal className="lg:col-span-5">

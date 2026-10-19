@@ -1,6 +1,7 @@
 import type { Project, ProjectStatus } from '../data/projects'
 import { useOpenProject } from '../drawer'
 import { ArrowUpRight, GitHubIcon } from './icons'
+import { ClipReveal } from './ClipReveal'
 import { ProjectMock } from './mocks'
 import { Frame } from './WorkCollage'
 
@@ -41,15 +42,17 @@ export function ProjectVisual({ project, eager = false }: { project: Project; ea
   if (!v) return null
   if (v.type === 'screenshot') return <Frame src={v.src} alt={v.alt} caption={v.caption} eager={eager} />
   return (
-    <figure className="overflow-hidden rounded-[10px] border border-line-strong shadow-[0_30px_60px_-24px_rgb(0_0_0/0.85)]">
-      <figcaption className="flex items-center gap-2 border-b border-line bg-raised px-3 py-1.5">
-        <span className="size-1.5 rounded-full border border-muted" aria-hidden="true" />
-        <span className="truncate font-mono text-[10.5px] text-muted">
-          {project.name} · interface preview, not a live build
-        </span>
-      </figcaption>
-      <ProjectMock kind={v.kind} />
-    </figure>
+    <ClipReveal>
+      <figure className="overflow-hidden rounded-[10px] border border-line-strong shadow-[0_30px_60px_-24px_rgb(0_0_0/0.85)]">
+        <figcaption className="flex items-center gap-2 border-b border-line bg-raised px-3 py-1.5">
+          <span className="size-1.5 rounded-full border border-muted" aria-hidden="true" />
+          <span className="truncate font-mono text-[10.5px] text-muted">
+            {project.name} · interface preview, not a live build
+          </span>
+        </figcaption>
+        <ProjectMock kind={v.kind} />
+      </figure>
+    </ClipReveal>
   )
 }
 

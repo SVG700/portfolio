@@ -137,11 +137,35 @@
 @utility btn {
   @apply inline-flex items-center justify-center gap-2 rounded-full px-5 py-3 text-[14px] font-medium whitespace-nowrap transition-[background-color,color,border-color,transform,translate,box-shadow] duration-200 active:scale-[0.98];
 }
+/* Fill sweep: a soft band slides across on hover (transform only). */
+@utility btn-sweep {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background: var(--sweep, rgb(255 255 255 / 0.25));
+    transform: translateX(-101%);
+    transition: transform 0.5s var(--ease-out-expo);
+  }
+  &:hover::before,
+  &:focus-visible::before {
+    transform: translateX(0);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    &::before {
+      transition: none;
+    }
+  }
+}
 @utility btn-primary {
-  @apply btn bg-accent text-accent-ink hover:-translate-y-px hover:bg-[#e2fa8c] hover:shadow-[0_8px_24px_-8px_rgb(212_243_106/0.55)];
+  @apply btn btn-sweep bg-accent text-accent-ink hover:-translate-y-px hover:bg-[#e2fa8c] hover:shadow-[0_8px_24px_-8px_rgb(212_243_106/0.55)];
 }
 @utility btn-ghost {
-  @apply btn border border-line-strong text-ink hover:-translate-y-px hover:border-accent/40 hover:bg-white/[0.04];
+  @apply btn btn-sweep [--sweep:rgb(212_243_106/0.08)] border border-line-strong text-ink hover:-translate-y-px hover:border-accent/40 hover:bg-white/[0.04];
 }
 /* Small icon+label links in the hero: colour shift and a nudge of the icon. */
 @utility hero-link {
@@ -336,6 +360,23 @@
   .skill:hover {
     color: var(--color-accent);
   }
+}
+
+/* Tech marquee: one slow loop (two copies of the row, shift by half). */
+@keyframes marquee {
+  to {
+    transform: translateX(-50%);
+  }
+}
+.marquee {
+  overflow: hidden;
+  mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+}
+.marquee-track {
+  animation: marquee 60s linear infinite;
+}
+.marquee:hover .marquee-track {
+  animation-play-state: paused;
 }
 
 /* Soft specular sheen that follows the pointer on tilting surfaces. */

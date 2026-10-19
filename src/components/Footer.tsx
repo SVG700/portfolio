@@ -1,9 +1,48 @@
+import { m } from 'framer-motion'
 import { useState } from 'react'
 import { profile } from '../data/profile'
 import { Reveal } from '../motion'
+import { EASE, STAGGER, VIEW_ONCE, useMotionAllowed } from '../motion-shared'
 import { AndroidAppLink } from './AndroidAppLink'
 import { ArrowUpRight, Check, Copy, GitHubIcon, LinkedInIcon } from './icons'
 import { ResumeButton } from './ResumeButton'
+
+const HEADLINE = 'Have a problem worth solving? Let’s talk.'
+
+/** Contact headline revealed letter by letter, once. Words never break mid-way. */
+function LetterHeadline() {
+  const allowed = useMotionAllowed()
+  if (!allowed) return <h2 className="display-md mt-5 text-balance">{HEADLINE}</h2>
+  let n = 0
+  return (
+    <m.h2
+      className="display-md mt-5 text-balance"
+      aria-label={HEADLINE}
+      initial="hidden"
+      whileInView="shown"
+      viewport={VIEW_ONCE}
+    >
+      {HEADLINE.split(' ').map((word, wi) => (
+        <span key={wi} aria-hidden="true" className="inline-block whitespace-nowrap">
+          {[...word].map((ch) => {
+            const i = n++
+            return (
+              <m.span
+                key={i}
+                className="inline-block"
+                variants={{ hidden: { opacity: 0, y: '0.3em' }, shown: { opacity: 1, y: 0 } }}
+                transition={{ duration: 0.4, ease: EASE, delay: i * STAGGER.chars }}
+              >
+                {ch}
+              </m.span>
+            )
+          })}
+          {wi < HEADLINE.split(' ').length - 1 && ' '}
+        </span>
+      ))}
+    </m.h2>
+  )
+}
 
 /** Contact band + footer, closing the page. */
 export function Footer() {
@@ -27,12 +66,21 @@ export function Footer() {
             <p className="meta text-muted">
               <span className="text-accent">(05)</span> Contact
             </p>
-            <h2 className="display-md mt-5 text-balance">Have a problem worth solving? Let’s talk.</h2>
+            <LetterHeadline />
             <div className="mt-6 flex flex-wrap items-center gap-x-4 gap-y-2">
               <a
                 href={`mailto:${profile.email}`}
-                className="group inline-flex items-center gap-2 font-display text-[clamp(1.2rem,5vw,1.75rem)] font-semibold tracking-[-0.02em] [overflow-wrap:anywhere]"
+                className="group relative inline-flex items-center gap-2 font-display text-[clamp(1.2rem,5vw,1.75rem)] font-semibold tracking-[-0.02em] [overflow-wrap:anywhere]"
               >
+                {/* One-time soft glow once the contact band is in view. */}
+                <m.span
+                  aria-hidden="true"
+                  className="pointer-events-none absolute -inset-x-6 -inset-y-4 -z-10 rounded-full bg-[radial-gradient(closest-side,rgb(212_243_106/0.18),transparent)]"
+                  initial={{ opacity: 0 }}
+                  whileInView={{ opacity: [0, 0.9, 0] }}
+                  viewport={VIEW_ONCE}
+                  transition={{ duration: 1.6, ease: 'easeInOut', delay: 0.6 }}
+                />
                 <span className="link-underline">{profile.email}</span>
                 <ArrowUpRight
                   className="size-5 shrink-0 text-accent transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"

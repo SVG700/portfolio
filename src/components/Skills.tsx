@@ -4,6 +4,7 @@ import { skillGroups } from '../data/skills'
 import { useOpenProject } from '../drawer'
 import { Reveal, Stagger, StaggerItem } from '../motion'
 import { SectionLabel } from './SectionLabel'
+import { AnimatedHeading } from './AnimatedHeading'
 
 const nameOf = Object.fromEntries(projects.map((p) => [p.id, p.name]))
 
@@ -14,8 +15,8 @@ export function Skills() {
       <div className="container-page">
         <Reveal>
           <SectionLabel index="03">Skills</SectionLabel>
-          <h2 className="display-lg mt-5">What I build with</h2>
         </Reveal>
+        <AnimatedHeading text="What I build with" keyword="build" className="display-lg mt-5" />
 
         <Stagger as="dl" className="mt-10 border-t border-line-strong">
           {skillGroups.map((g) => (

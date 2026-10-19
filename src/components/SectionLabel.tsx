@@ -1,13 +1,13 @@
 import { m } from 'framer-motion'
-import type { ReactNode } from 'react'
 import { EASE } from '../motion-shared'
+import { Decode } from './Decode'
 
 /**
  * Small running label that opens each section: "(01) ——— Selected work".
- * The lime rule draws in when the label scrolls into view (static with
- * reduced motion, since MotionConfig drops the transform).
+ * The lime rule draws in and the text decodes when the label scrolls into
+ * view (both static with reduced motion).
  */
-export function SectionLabel({ index, children }: { index: string; children: ReactNode }) {
+export function SectionLabel({ index, children }: { index: string; children: string }) {
   return (
     <p className="meta flex items-center gap-3 text-muted">
       <span className="text-accent">({index})</span>
@@ -19,7 +19,7 @@ export function SectionLabel({ index, children }: { index: string; children: Rea
         viewport={{ once: true, amount: 1 }}
         transition={{ duration: 0.8, ease: EASE, delay: 0.15 }}
       />
-      {children}
+      <Decode text={children} />
     </p>
   )
 }

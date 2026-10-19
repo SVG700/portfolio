@@ -1,8 +1,14 @@
+import { useEffect, useState } from 'react'
 import { projects, type Project } from '../data/projects'
 import { Reveal, Stagger, StaggerItem } from '../motion'
 import { ProjectActions, ProjectVisual, Stack, Status } from './projectBits'
 import { SectionLabel } from './SectionLabel'
 import { Depth, Tilt } from './Tilt'
+import { AnimatedHeading } from './AnimatedHeading'
+import { Decode } from './Decode'
+import { FeatureStory } from './FeatureStory'
+import { useMotionAllowed } from '../motion-shared'
+import { isNativeApp } from '../platform'
 
 /* Featured: text beside an interface preview. The preview is tablet+ only —
    on phones a scaled-down interface would be unreadable. */
@@ -12,7 +18,7 @@ function Featured({ p, flip }: { p: Project; flip: boolean }) {
       <div className={`flex flex-col lg:col-span-5 ${flip ? 'lg:order-last' : ''}`}>
         <div className="flex flex-wrap items-center gap-x-4 gap-y-1">
           <Status status={p.status} />
-          <p className="meta">{p.category}</p>
+          <p className="meta"><Decode text={p.category} /></p>
         </div>
         <h3 id={`${p.id}-h`} className="display-md mt-4 text-balance">
           {p.name}
@@ -48,7 +54,7 @@ function Card({ p }: { p: Project }) {
       aria-labelledby={`${p.id}-h`}
     >
       <div className="flex flex-wrap items-center justify-between gap-x-3 gap-y-1">
-        <p className="meta">{p.category}</p>
+        <p className="meta"><Decode text={p.category} /></p>
         <Status status={p.status} />
       </div>
       <h3 id={`${p.id}-h`} className="display-sm mt-3 text-[1.35rem]">
@@ -66,7 +72,22 @@ function Card({ p }: { p: Project }) {
   )
 }
 
+/** Pinned scroll story on desktop with motion allowed (not in the app). */
+function useStoryLayout() {
+  const allowed = useMotionAllowed()
+  const [wide, setWide] = useState(false)
+  useEffect(() => {
+    const mq = window.matchMedia('(min-width: 1024px)')
+    const update = () => setWide(mq.matches)
+    update()
+    mq.addEventListener('change', update)
+    return () => mq.removeEventListener('change', update)
+  }, [])
+  return wide && allowed && !isNativeApp
+}
+
 export function Work() {
+  const story = useStoryLayout()
   const featured = projects.filter((p) => p.tier === 'featured')
   const more = projects.filter((p) => p.tier === 'more')
 
@@ -76,7 +97,7 @@ export function Work() {
         <Reveal className="flex flex-wrap items-end justify-between gap-x-10 gap-y-4">
           <div>
             <SectionLabel index="02">Selected projects</SectionLabel>
-            <h2 className="display-lg mt-5">Things I’ve built</h2>
+            <AnimatedHeading text="Things I’ve built" keyword="built" className="display-lg mt-5" />
           </div>
           <p className="max-w-sm text-[14.5px] leading-relaxed text-muted">
             Every project is marked live demo, prototype or in development, so it’s clear what exists today.
@@ -84,11 +105,15 @@ export function Work() {
         </Reveal>
 
         <div className="mt-12 space-y-16 md:mt-16 md:space-y-20">
-          {featured.map((p, i) => (
-            <Reveal key={p.id}>
-              <Featured p={p} flip={i % 2 === 1} />
-            </Reveal>
-          ))}
+          {featured.map((p, i) =>
+            story ? (
+              <FeatureStory key={p.id} p={p} flip={i % 2 === 1} />
+            ) : (
+              <Reveal key={p.id}>
+                <Featured p={p} flip={i % 2 === 1} />
+              </Reveal>
+            ),
+          )}
         </div>
 
         <h3 className="meta mt-16 text-muted md:mt-20">More projects</h3>
