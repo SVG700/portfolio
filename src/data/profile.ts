@@ -23,12 +23,10 @@ export const profile = {
   openToInternships: false,
   /**
    * Android app download, shown on the website only (hidden inside the app).
-   * TODO: once the "portfolio" repo exists and the APK is attached to a GitHub
-   * Release, set this to the release URL, e.g.
-   *   'https://github.com/SVG700/portfolio/releases/latest'
-   * While it is null the link is not rendered at all.
+   * Points at the latest GitHub Release, which has the signed APK attached.
+   * Set to null to hide the link.
    */
-  androidAppUrl: null as string | null,
+  androidAppUrl: 'https://github.com/SVG700/portfolio/releases/latest' as string | null,
 } as const
 
 export type Education = {
