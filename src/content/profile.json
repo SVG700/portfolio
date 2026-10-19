@@ -1,11 +1,21 @@
 {
-  "activities": [
-    "Attended the GSoC community meetup at Google Ananta, Bengaluru — organised by GDG Bangalore (Jul 2026)",
-    "Competitive programming, hackathons and CTF (IISc)",
-    "NCC 'A' Certificate (2022)",
-    "Photo and video editing",
-    "Community service"
-  ],
+  "profile": {
+    "name": "Samhith V Gupta",
+    "headline": "Building technology that solves real-world problems.",
+    "summary": "Computer Science undergraduate who builds full-stack web, Android and AI-integrated applications — from hackathon prototypes to live demos. ai projects",
+    "degree": "B.Tech, Computer Science and Engineering",
+    "university": "Presidency University, Bengaluru",
+    "currentRole": "Google Student Ambassador · 2026 – Present",
+    "location": "Bengaluru, India",
+    "email": "samhithvgupta@gmail.com",
+    "links": {
+      "github": "https://github.com/SVG700",
+      "linkedin": "https://linkedin.com/in/samhith-v-gupta"
+    },
+    "resumePath": "/resume.pdf",
+    "openToInternships": false,
+    "androidAppUrl": "https://github.com/SVG700/portfolio/releases/latest"
+  },
   "education": [
     {
       "institution": "Presidency University, Bengaluru",
@@ -18,6 +28,13 @@
       "degree": "High School & Pre-University (PCMC)",
       "period": "Apr 2021 – Mar 2025"
     }
+  ],
+  "activities": [
+    "Attended the GSoC community meetup at Google Ananta, Bengaluru — organised by GDG Bangalore (Jul 2026)",
+    "Competitive programming, hackathons and CTF (IISc)",
+    "NCC 'A' Certificate (2022)",
+    "Photo and video editing",
+    "Community service"
   ],
   "languages": [
     {
@@ -36,22 +53,5 @@
       "name": "Telugu",
       "level": "conversational"
     }
-  ],
-  "profile": {
-    "name": "Samhith V Gupta",
-    "headline": "Building technology that solves real-world problems.",
-    "summary": "Computer Science undergraduate who builds full-stack web, Android and AI-integrated applications — from hackathon prototypes to live demos.",
-    "degree": "B.Tech, Computer Science and Engineering",
-    "university": "Presidency University, Bengaluru",
-    "currentRole": "Google Student Ambassador · 2026 – Present",
-    "location": "Bengaluru, India",
-    "email": "samhithvgupta@gmail.com",
-    "links": {
-      "github": "https://github.com/SVG700",
-      "linkedin": "https://linkedin.com/in/samhith-v-gupta"
-    },
-    "resumePath": "/resume.pdf",
-    "openToInternships": false,
-    "androidAppUrl": "https://github.com/SVG700/portfolio/releases/latest"
-  }
+  ]
 }
