@@ -2,7 +2,7 @@
 
 Personal portfolio of **Samhith V Gupta**, Computer Science student at Presidency University, Bengaluru: projects, experience, skills, education and a downloadable resume. The same codebase also ships as an offline Android app.
 
-**Live site:** _coming soon_ · **Android app:** see [Releases](https://github.com/SVG700/portfolio/releases)
+**Live site:** [portfolio-xi-two-shccsnjn2d.vercel.app](https://portfolio-xi-two-shccsnjn2d.vercel.app) · **Android app:** see [Releases](https://github.com/SVG700/portfolio/releases)
 
 ## Highlights
 
@@ -89,4 +89,4 @@ App-only behaviour lives in `src/native.ts` (status bar, back button, opening ex
 
 ## Social preview
 
-`public/og-image.png` (1200×630) is the link-preview image. After deploying, change `og:image` and `twitter:image` in `index.html` to the absolute URL (e.g. `https://your-domain/og-image.png`) — LinkedIn requires an absolute URL.
+`public/og-image.png` (1200×630) is the link-preview image. `index.html` points `canonical`, `og:url`, `og:image` and `twitter:image` at the live URL (LinkedIn needs absolute URLs). Update them if the domain changes.
