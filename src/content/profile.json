@@ -2,7 +2,7 @@
   "profile": {
     "name": "Samhith V Gupta",
     "headline": "Building technology that solves real-world problems.",
-    "summary": "Computer Science undergraduate who builds full-stack web, Android and AI-integrated applications — from hackathon prototypes to live demos. ai projects",
+    "summary": "Computer Science undergraduate who builds full-stack web, Android and AI-integrated applications — from hackathon prototypes to live demos.",
     "degree": "B.Tech, Computer Science and Engineering",
     "university": "Presidency University, Bengaluru",
     "currentRole": "Google Student Ambassador · 2026 – Present",
@@ -13,7 +13,7 @@
       "linkedin": "https://linkedin.com/in/samhith-v-gupta"
     },
     "resumePath": "/resume.pdf",
-    "openToInternships": false,
+    "openToInternships": true,
     "androidAppUrl": "https://github.com/SVG700/portfolio/releases/latest"
   },
   "education": [
