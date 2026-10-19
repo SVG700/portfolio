@@ -1,0 +1,162 @@
+# Admin portal: Pages CMS (https://app.pagescms.org). Sign in with GitHub,
+# open SVG700/portfolio, edit, Save. Each save is a commit to main, and
+# Vercel redeploys the site automatically.
+media:
+  input: public
+  output: /
+
+content:
+  - name: profile
+    label: Profile & education
+    type: file
+    path: src/content/profile.json
+    format: json
+    fields:
+      - name: profile
+        label: Profile
+        type: object
+        fields:
+          - { name: name, label: Name, type: string }
+          - { name: headline, label: Headline, type: string }
+          - { name: summary, label: Summary, type: text }
+          - { name: degree, label: Degree, type: string }
+          - { name: university, label: University, type: string }
+          - { name: currentRole, label: Current role, type: string }
+          - { name: location, label: Location, type: string }
+          - { name: email, label: Email, type: string }
+          - name: links
+            label: Links
+            type: object
+            fields:
+              - { name: github, label: GitHub URL, type: string }
+              - { name: linkedin, label: LinkedIn URL, type: string }
+          - { name: resumePath, label: Resume path (upload the PDF as public/resume.pdf), type: string }
+          - { name: openToInternships, label: Show "Open to internships" badge, type: boolean }
+          - { name: androidAppUrl, label: Android app link (empty hides it), type: string }
+      - name: education
+        label: Education
+        type: object
+        list: true
+        fields:
+          - { name: institution, label: Institution, type: string }
+          - { name: degree, label: Degree, type: string }
+          - { name: period, label: Period, type: string }
+          - { name: note, label: Note, type: string }
+      - { name: activities, label: Activities, type: string, list: true }
+      - name: languages
+        label: Languages
+        type: object
+        list: true
+        fields:
+          - { name: name, label: Language, type: string }
+          - { name: level, label: Level, type: string }
+
+  - name: projects
+    label: Projects
+    type: file
+    path: src/content/projects.json
+    format: json
+    fields:
+      - name: projects
+        label: Projects
+        type: object
+        list: true
+        fields:
+          - { name: id, label: ID (lowercase, unique), type: string, required: true }
+          - { name: name, label: Name, type: string, required: true }
+          - { name: category, label: Category, type: string }
+          - { name: problem, label: Problem (one line), type: text }
+          - { name: summary, label: Summary, type: text }
+          - name: status
+            label: Status
+            type: select
+            options: { values: [Live demo, In development, Prototype, Local prototype] }
+          - name: tier
+            label: Placement
+            type: select
+            options: { values: [featured, more] }
+          - { name: role, label: My role, type: string }
+          - { name: context, label: Context, type: string }
+          - { name: features, label: Features, type: string, list: true }
+          - { name: stack, label: Tech stack, type: string, list: true }
+          - name: links
+            label: Links
+            type: object
+            fields:
+              - { name: repo, label: Repository URL, type: string }
+              - { name: repoLabel, label: Repository link text, type: string }
+              - { name: demo, label: Live demo URL, type: string }
+          - { name: notes, label: Notes / caveats, type: string, list: true }
+          - name: visual
+            label: Visual (screenshot or built-in mock)
+            type: object
+            fields:
+              - name: type
+                label: Type
+                type: select
+                options: { values: [screenshot, mock] }
+              - { name: src, label: Screenshot (1280px WebP in public/work), type: image }
+              - { name: alt, label: Screenshot alt text, type: string }
+              - { name: caption, label: Screenshot caption, type: string }
+              - name: kind
+                label: Mock kind
+                type: select
+                options: { values: [nexora, paimana, ecobuddy] }
+
+  - name: achievements
+    label: Achievements
+    type: file
+    path: src/content/achievements.json
+    format: json
+    fields:
+      - name: achievements
+        label: Achievements
+        type: object
+        list: true
+        fields:
+          - { name: figure, label: Big figure (e.g. "Top 100"), type: string }
+          - { name: title, label: Title, type: string }
+          - { name: detail, label: Detail, type: string }
+          - { name: year, label: Year, type: string }
+          - { name: project, label: Linked project ID, type: string }
+          - { name: evidenceUrl, label: Certificate URL, type: string }
+
+  - name: experience
+    label: Experience
+    type: file
+    path: src/content/experience.json
+    format: json
+    fields:
+      - name: roles
+        label: Roles (newest first)
+        type: object
+        list: true
+        fields:
+          - { name: title, label: Title, type: string }
+          - { name: organisation, label: Organisation, type: string }
+          - { name: period, label: Period, type: string }
+          - { name: detail, label: Detail, type: text }
+
+  - name: skills
+    label: Skills
+    type: file
+    path: src/content/skills.json
+    format: json
+    fields:
+      - name: skillGroups
+        label: Skill groups
+        type: object
+        list: true
+        fields:
+          - { name: title, label: Group, type: string }
+          - name: skills
+            label: Skills
+            type: object
+            list: true
+            fields:
+              - { name: name, label: Skill, type: string }
+              - name: level
+                label: Level (leave empty if confident)
+                type: select
+                options: { values: [learning, basic] }
+          - { name: evidence, label: Used in (project IDs), type: string, list: true }

@@ -1,3 +1,8 @@
+// Content lives in src/content/*.json (edited via the admin portal, Pages CMS).
+// This file only adds TypeScript types.
+import content from '../content/skills.json'
+export const skillGroups = content.skillGroups as SkillGroup[]
+
 // Skills, grouped. Each group lists projects where the skills are used.
 // `level` qualifies the few that are still being learned — no percentages.
 
@@ -8,53 +13,3 @@ export type SkillGroup = {
   skills: Skill[]
   evidence: string[]
 }
-
-export const skillGroups: SkillGroup[] = [
-  {
-    title: 'Languages',
-    skills: [
-      { name: 'JavaScript' },
-      { name: 'TypeScript' },
-      { name: 'Python' },
-      { name: 'C' },
-      { name: 'HTML/CSS' },
-      { name: 'Java', level: 'learning' },
-      { name: 'XML', level: 'basic' },
-    ],
-    evidence: ['heliohub', 'paimana', 'owaste'],
-  },
-  {
-    title: 'Frontend',
-    skills: [{ name: 'React' }, { name: 'Next.js' }, { name: 'Tailwind CSS' }, { name: 'Vite' }, { name: 'Framer Motion' }],
-    evidence: ['nexora', 'heliohub', 'nyayalens'],
-  },
-  {
-    title: 'Backend & AI',
-    skills: [{ name: 'FastAPI' }, { name: 'Supabase' }, { name: 'REST APIs' }, { name: 'Gemini API' }],
-    evidence: ['paimana', 'heliohub', 'ecobuddy'],
-  },
-  {
-    title: 'Mobile & Web3',
-    skills: [
-      { name: 'Android Studio' },
-      { name: 'Android SDK' },
-      { name: 'Firebase' },
-      { name: 'Firebase Realtime Database' },
-      { name: 'Algorand' },
-    ],
-    evidence: ['owaste', 'payperview'],
-  },
-  {
-    title: 'Tools',
-    skills: [
-      { name: 'Git' },
-      { name: 'GitHub' },
-      { name: 'Vercel' },
-      { name: 'VS Code' },
-      { name: 'GitHub Copilot' },
-      { name: 'PowerShell' },
-      { name: 'Canva' },
-    ],
-    evidence: [],
-  },
-]

@@ -34,24 +34,26 @@ npm run build    # production build in dist/
 npm run preview  # serve the production build
 ```
 
-## Editing content
+## Editing content (admin portal)
 
-All personal content lives in `src/data/` — components only render it.
+All site content lives in `src/content/*.json`; `src/data/*.ts` only adds TypeScript types. Components never hold content.
+
+**Admin portal:** sign in at [app.pagescms.org](https://app.pagescms.org) with GitHub and open `SVG700/portfolio`. Its forms are defined in `.pages.yml`: Profile & education, Projects, Achievements, Experience and Skills, plus uploads to `public/` (screenshots, `resume.pdf`). Every save is a commit to `main`, so Vercel redeploys within about a minute. Editing the JSON files directly works too.
 
 | File | What it holds |
 | --- | --- |
-| `src/data/profile.ts` | Name, intro, email, links, resume path, education, interests, `openToInternships` flag |
-| `src/data/projects.ts` | Projects: status, stack, features, role, links, scope notes |
-| `src/data/skills.ts` | Grouped skills and which projects demonstrate them |
-| `src/data/achievements.ts` | Awards and programmes (add `year` / `evidenceUrl` when confirmed) |
-| `src/data/experience.ts` | Experience and leadership roles (add `period` when confirmed) |
+| `src/content/profile.json` | Name, intro, email, links, resume path, Android app link, `openToInternships`, education, activities, languages |
+| `src/content/projects.json` | Projects: status, stack, features, role, links, notes, visual |
+| `src/content/skills.json` | Grouped skills and which projects use them |
+| `src/content/achievements.json` | Awards and programmes (`year` / `evidenceUrl` optional) |
+| `src/content/experience.json` | Experience and leadership roles |
 
-Optional fields that are left out simply don't render, so there are no empty placeholders on the page.
+Optional fields that are empty simply don't render, so there are no blank placeholders on the page.
 
 ## Project visuals
 
 - **Screenshots** (`public/work/*.webp`) are real captures of the deployed demos: HelioHub, NyayaLens, PayPerView and StadiumOS (the StadiumOS one comes from the repo's own `screenshots/` folder). To replace one, drop in a new 1280px-wide WebP and keep the filename.
-- **Interface previews** for NEXORA, the forecasting project and EcoBuddy are built in code (`src/components/mocks.tsx`). They use synthetic values and say so on screen. Swap a project to a real screenshot by changing its `visual` in `projects.ts` to `{ type: 'screenshot', … }`.
+- **Interface previews** for NEXORA, the forecasting project and EcoBuddy are built in code (`src/components/mocks.tsx`). They use synthetic values and say so on screen. Swap a project to a real screenshot by changing its `visual` in `projects.json` to `{ type: 'screenshot', … }`.
 
 ## Resume
 
@@ -61,9 +63,9 @@ The resume is generated from `resume/resume.html` with `npm run resume` (output:
 
 ## Adding links later
 
-- **Repository or demo:** set `links.repo` / `links.demo` on the project in `projects.ts`.
-- **Certificate:** set `evidenceUrl` on the achievement in `achievements.ts`.
-- **Availability badge:** set `openToInternships: true` in `profile.ts` (off by default).
+- **Repository or demo:** set `links.repo` / `links.demo` on the project in `projects.json`.
+- **Certificate:** set `evidenceUrl` on the achievement in `achievements.json`.
+- **Availability badge:** set `openToInternships: true` in `profile.json` (off by default).
 
 ## Build the Android APK
 
@@ -85,7 +87,7 @@ App-only behaviour lives in `src/native.ts` (status bar, back button, opening ex
 - Android SDK (`ANDROID_HOME`).
 - The signing files in `~/.android-keys/samhith-portfolio/` (`release.jks` + `signing.properties`). They are never in this repo. **Back them up** — without that exact keystore you cannot publish updates that install over the existing app.
 
-**Releasing:** bump `versionCode` and `versionName` in `android/app/build.gradle`, run `npm run apk`, then attach `release/samhith-v-gupta-<version>.apk` to a GitHub Release. The APK is gitignored — don't commit it. Set `androidAppUrl` in `src/data/profile.ts` to the release page so the website's "Get the Android app" button turns on (it is hidden inside the app).
+**Releasing:** bump `versionCode` and `versionName` in `android/app/build.gradle`, run `npm run apk`, then attach `release/samhith-v-gupta-<version>.apk` to a GitHub Release. The APK is gitignored — don't commit it. Set `androidAppUrl` in `src/content/profile.json` to the release page so the website's "Get the Android app" button turns on (it is hidden inside the app).
 
 ## Social preview
 
