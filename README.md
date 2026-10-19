@@ -1,12 +1,35 @@
 # Samhith V Gupta — Portfolio
 
-Personal portfolio built with Vite, React, TypeScript and Tailwind CSS v4.
+Personal portfolio of **Samhith V Gupta**, Computer Science student at Presidency University, Bengaluru: projects, experience, skills, education and a downloadable resume. The same codebase also ships as an offline Android app.
+
+**Live site:** _coming soon_ · **Android app:** see [Releases](https://github.com/SVG700/portfolio/releases)
+
+## Highlights
+
+- Fast, static single-page site, deployed on Vercel. No backend, no tracking.
+- Content lives in typed data files (`src/data/`), so updating the site never means touching layout code.
+- Considered motion system (Framer Motion): scroll reveals, a scroll-linked timeline, a pinned project story on desktop, and an optional 3D hero scene that only loads on capable desktops. Everything respects `prefers-reduced-motion`.
+- Accessible: semantic landmarks, keyboard focus styles, screen-reader text for every animated label.
+- Android app built with Capacitor: bundled offline, animated launch splash, lighter motion profile.
+
+## Tech stack
+
+| Area | Tools |
+| --- | --- |
+| Framework | React 19, TypeScript, Vite |
+| Styling | Tailwind CSS v4, self-hosted variable fonts (Bricolage Grotesque, Geist) |
+| Motion and 3D | Framer Motion, three.js with React Three Fiber (lazy-loaded) |
+| Android | Capacitor 8 |
+| Hosting | Vercel (static build from `dist/`) |
 
 ## Run locally
+
+Requires Node.js 20 or newer.
 
 ```bash
 npm install
 npm run dev      # http://localhost:5173
+npm run lint
 npm run build    # production build in dist/
 npm run preview  # serve the production build
 ```
@@ -41,9 +64,8 @@ The resume is generated from `resume/resume.html` with `npm run resume` (output:
 - **Repository or demo:** set `links.repo` / `links.demo` on the project in `projects.ts`.
 - **Certificate:** set `evidenceUrl` on the achievement in `achievements.ts`.
 - **Availability badge:** set `openToInternships: true` in `profile.ts` (off by default).
-- **Profile photo (optional):** not used by the current design. If wanted, add it to `public/` and render it in `src/components/Hero.tsx`.
 
-## Android app
+## Build the Android APK
 
 The same site, packaged with [Capacitor](https://capacitorjs.com) into an Android app (`dev.samhith.portfolio`). The built site is bundled inside the APK, so the app works offline. Content still comes from `src/data/` — there is one codebase.
 
