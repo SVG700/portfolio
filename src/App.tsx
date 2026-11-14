@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { CursorLabel } from './components/CursorLabel'
 import { Education } from './components/Education'
 import { Experience } from './components/Experience'
 import { Footer } from './components/Footer'
@@ -29,6 +30,7 @@ export default function App() {
           <Education />
         </main>
         <Footer />
+        <CursorLabel />
         <ProjectDrawer projectId={openId} onClose={() => setOpenId(null)} />
       </DrawerContext.Provider>
     </MotionProvider>

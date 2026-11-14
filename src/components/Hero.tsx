@@ -1,131 +1,160 @@
 import { m } from 'framer-motion'
+import { achievements } from '../data/achievements'
 import { profile } from '../data/profile'
-import { Magnetic } from '../motion'
+import { CountUp, Magnetic } from '../motion'
 import { EASE } from '../motion-shared'
+import { isNativeApp } from '../platform'
 import { HeroBackdrop } from '../three/HeroBackdrop'
-import { HeroComposition } from './HeroComposition'
-import { ArrowDown, GitHubIcon, LinkedInIcon, Mail } from './icons'
-import { Portrait } from './Portrait'
+import { HeroTerminal } from './HeroTerminal'
+import { ArrowDown, ArrowUpRight, GitHubIcon, LinkedInIcon, Mail } from './icons'
 import { ResumeButton } from './ResumeButton'
-import { WorkCollage } from './WorkCollage'
-
-const LINES = [
-  { text: 'Building technology', className: '' },
-  { text: 'that solves', className: 'xl:pl-[1.2em]' },
-]
 
 /** Fade-and-rise for the hero's text blocks, in sequence after the name. */
 const rise = (delay: number) => ({
   initial: { opacity: 0, y: 14 },
   animate: { opacity: 1, y: 0 },
-  transition: { duration: 0.7, ease: EASE, delay },
+  transition: { duration: 0.5, ease: EASE, delay },
 })
 
-export function Hero() {
-  const [role, since] = profile.currentRole.split(' · ')
+// "Samhith" / "V Gupta" — the name is the headline, split after the first word.
+const [FIRST, ...REST] = profile.name.split(' ')
+const NAME_LINES = [FIRST, REST.join(' ')]
 
+// The headline sentence with its key phrase set in the serif italic.
+const KEY = 'real-world'
+const [BEFORE, AFTER] = profile.headline.split(KEY)
+
+// The three results shown under the hero — the first three in achievements.json.
+const PROOF = achievements.slice(0, 3)
+
+export function Hero() {
   return (
     <section
       id="top"
-      className="relative overflow-x-clip pt-24 pb-14 md:pt-28 md:pb-20"
+      className="relative isolate flex min-h-[100svh] flex-col overflow-clip pt-20 md:pt-28"
       style={{ marginTop: 'var(--safe-top)' }}
     >
-      <div className="container-page grid items-center gap-12 lg:grid-cols-12 lg:gap-10">
-        <div className="lg:col-span-7">
-          {/* Identity first: photo (phones/tablets) beside name, degree and current role. */}
-          <div className="flex items-center gap-4 sm:gap-5">
-            <Portrait className="w-[92px] sm:w-[112px] lg:hidden" sizes="112px" delay={0.1} />
-            <div className="min-w-0">
-              <m.p className="font-display text-[1.6rem] leading-tight font-semibold tracking-[-0.025em] sm:text-[1.9rem]" {...rise(0.15)}>
-                <span className="relative inline-block">
-                  {profile.name}
-                  {/* lime accent that draws under the name */}
-                  <m.span
-                    aria-hidden="true"
-                    className="absolute -bottom-1 left-0 h-[3px] w-full origin-left rounded-full bg-accent"
-                    initial={{ scaleX: 0 }}
-                    animate={{ scaleX: 1 }}
-                    transition={{ duration: 0.8, ease: EASE, delay: 0.55 }}
-                  />
+      {/* Atmosphere: two soft lights behind the graph (gradients, no blur filter). */}
+      <div aria-hidden="true" className="hero-glow pointer-events-none absolute inset-0 -z-20" />
+
+      {/* The knowledge graph: the ambient layer, behind the text and the terminal. */}
+      <HeroBackdrop className="absolute top-12 -right-[42%] -z-10 aspect-square w-[135%] opacity-45 [mask-image:radial-gradient(closest-side,#000_55%,transparent)] sm:-right-[20%] sm:w-[90%] lg:inset-y-0 lg:top-0 lg:right-0 lg:aspect-auto lg:h-full lg:w-[62%] lg:opacity-80 lg:[mask-image:linear-gradient(90deg,transparent,#000_22%)]" />
+
+      <div className="container-page flex flex-1 flex-col justify-center pb-10">
+        {/* Phones: intro, terminal, then actions. Desktop: text left, terminal right over the graph. */}
+        <div className="grid gap-x-10 gap-y-5 sm:gap-y-7 lg:grid-cols-12 lg:items-center">
+          <div className="lg:col-span-7">
+            <m.div className="flex flex-wrap items-center gap-x-3 gap-y-2" {...rise(0.05)}>
+              {profile.openToInternships && (
+                <span className="inline-flex items-center gap-2 rounded-full border border-accent/30 bg-accent/[0.08] px-3 py-1.5 text-[12.5px] font-medium text-accent">
+                  <span className="relative flex size-2" aria-hidden="true">
+                    <span className="pulse-ring absolute inline-flex size-full rounded-full bg-accent" />
+                    <span className="relative inline-flex size-2 rounded-full bg-accent" />
+                  </span>
+                  Open to internships
                 </span>
-              </m.p>
-              <m.p className="mt-2.5 text-[14px] leading-snug text-muted" {...rise(0.25)}>
-                {profile.degree} · {profile.university}
-              </m.p>
-              <m.p className="mt-2 inline-flex flex-wrap items-center gap-x-2 text-[13.5px]" {...rise(0.32)}>
-                <span className="size-1.5 shrink-0 rounded-full bg-accent" aria-hidden="true" />
-                <span className="font-medium">{role}</span>
-                <span className="meta">{since}</span>
-              </m.p>
-            </div>
+              )}
+              <span className="meta text-muted">{profile.location}</span>
+            </m.div>
+
+            <h1 className="display-name mt-4 sm:mt-6">
+              {NAME_LINES.map((line, i) => (
+                <span key={line} className="line-mask">
+                  <span style={{ animationDelay: `${60 + i * 70}ms` }}>
+                    {line}
+                    {i === NAME_LINES.length - 1 && <span className="text-accent">.</span>}
+                  </span>
+                </span>
+              ))}
+            </h1>
+
+            <m.p className="display-tagline mt-4 max-w-[34rem] text-balance sm:mt-6" {...rise(0.2)}>
+              {AFTER === undefined ? (
+                profile.headline
+              ) : (
+                <>
+                  {BEFORE}
+                  <span className="serif-accent">{KEY}</span>
+                  {AFTER}
+                </>
+              )}
+            </m.p>
           </div>
 
-          <h1 className="display-hero mt-8 text-balance md:mt-10">
-            <span className="sr-only">{profile.name} — </span>
-            {LINES.map((l, i) => (
-              <span key={l.text} className="line-mask">
-                <span className={l.className} style={{ animationDelay: `${200 + i * 90}ms` }}>
-                  {l.text}
-                </span>
-              </span>
-            ))}
-            <span className="line-mask">
-              <span style={{ animationDelay: '380ms' }}>
-                <span className="text-accent">real-world</span> problems.
-              </span>
-            </span>
-          </h1>
-
-          <m.p className="lede mt-6 max-w-xl text-ink/85" {...rise(0.5)}>
-            {profile.summary}
-          </m.p>
-
-          <m.div className="mt-8 flex flex-wrap gap-3" {...rise(0.62)}>
-            <Magnetic>
-              <a href="#work" className="btn-primary group">
-                View projects
-                <ArrowDown className="size-4 transition-transform duration-300 group-hover:translate-y-0.5" aria-hidden="true" />
-              </a>
-            </Magnetic>
-            <ResumeButton />
+          {/* Identity: photo, degree and current role, shown as a terminal running whoami. */}
+          <m.div className="lg:col-span-5 lg:col-start-8 lg:row-span-2 lg:row-start-1" {...rise(0.25)}>
+            <HeroTerminal className="w-full max-w-[27rem] lg:ml-auto" />
           </m.div>
 
-          <m.ul className="mt-7 flex flex-wrap gap-x-6 gap-y-3 text-[14px] text-muted" {...rise(0.72)}>
-            <li>
-              <a href={profile.links.github} target="_blank" rel="noopener noreferrer" className="hero-link">
-                <GitHubIcon /> <span className="link-underline">SVG700</span>
-                <span className="sr-only">on GitHub (opens in a new tab)</span>
-              </a>
-            </li>
-            <li>
-              <a href={profile.links.linkedin} target="_blank" rel="noopener noreferrer" className="hero-link">
-                <LinkedInIcon /> <span className="link-underline">LinkedIn</span>
-                <span className="sr-only">(opens in a new tab)</span>
-              </a>
-            </li>
-            <li>
-              <a href={`mailto:${profile.email}`} className="hero-link">
-                <Mail className="size-4" aria-hidden="true" /> <span className="link-underline">Email</span>
-              </a>
-            </li>
-          </m.ul>
+          <div className="flex flex-col lg:col-span-7">
+            <m.p className="lede order-2 mt-7 max-w-xl text-[1.02rem] text-muted lg:order-1 lg:mt-0" {...rise(0.3)}>
+              {profile.summary}
+            </m.p>
+
+            <m.div className="order-1 flex flex-wrap gap-3 lg:order-2 lg:mt-8" {...rise(0.35)}>
+              <Magnetic>
+                <a href="#work" className="btn-primary group">
+                  View projects
+                  <ArrowDown className="size-4 transition-transform duration-300 group-hover:translate-y-0.5" aria-hidden="true" />
+                </a>
+              </Magnetic>
+              <ResumeButton />
+            </m.div>
+
+            <m.ul className="order-3 mt-7 flex flex-wrap gap-x-6 gap-y-3 text-[14px] text-muted" {...rise(0.4)}>
+              <li>
+                <a href={profile.links.github} target="_blank" rel="noopener noreferrer" className="hero-link">
+                  <GitHubIcon /> <span className="link-underline">GitHub</span>
+                  <span className="sr-only">(opens in a new tab)</span>
+                </a>
+              </li>
+              <li>
+                <a href={profile.links.linkedin} target="_blank" rel="noopener noreferrer" className="hero-link">
+                  <LinkedInIcon /> <span className="link-underline">LinkedIn</span>
+                  <span className="sr-only">(opens in a new tab)</span>
+                </a>
+              </li>
+              <li>
+                <a href={`mailto:${profile.email}`} className="hero-link">
+                  <Mail className="size-4" aria-hidden="true" /> <span className="link-underline">Email</span>
+                </a>
+              </li>
+            </m.ul>
+          </div>
         </div>
 
-        {/* Desktop: portrait in front of live-build screenshots and the 3D network. */}
-        <div className="hidden lg:col-span-5 lg:block">
-          <HeroComposition />
-        </div>
-
-        {/* Tablet: live builds below the intro (the portrait is already in the identity row). */}
-        <div className="relative isolate hidden md:block lg:hidden">
-          <HeroBackdrop
-            media="(min-width: 768px) and (max-width: 1023.98px)"
-            className="absolute top-1/2 left-1/2 -z-10 aspect-square w-[110%] -translate-x-1/2 -translate-y-1/2 opacity-70 [mask-image:radial-gradient(closest-side,#000_62%,transparent)]"
-          />
-          <WorkCollage />
-          <p className="meta mt-4">Live builds — HelioHub, NyayaLens, PayPerView</p>
-        </div>
+        {/* What the graph shows (desktop, where it is interactive). */}
+        {!isNativeApp && (
+          <m.p className="meta pointer-events-none absolute top-28 right-10 hidden items-center gap-4 lg:flex" aria-hidden="true" {...rise(0.8)}>
+            <span className="flex items-center gap-1.5"><span className="size-2 rounded-full bg-accent" />Projects</span>
+            <span className="flex items-center gap-1.5"><span className="size-1.5 rounded-full bg-ion" />Skills</span>
+            <span className="flex items-center gap-1.5"><span className="size-1.5 rounded-full bg-ink" />Awards</span>
+            <span className="text-muted">Hover a node, click a project</span>
+          </m.p>
+        )}
       </div>
+
+      {/* Proof strip: the strongest results, on the first screen. */}
+      <m.div className="border-t border-line bg-bg/60 backdrop-blur-sm" {...rise(0.45)}>
+        <ul className="container-page grid sm:grid-cols-3">
+          {PROOF.map((a, i) => (
+            <li key={a.title} className={`${i > 0 ? 'border-t border-line sm:border-t-0 sm:border-l' : ''}`}>
+              <a
+                href="#experience"
+                className={`group flex items-baseline gap-4 py-4 sm:flex-col sm:gap-1.5 sm:py-5 ${i === 0 ? 'sm:pr-6 lg:pr-8' : 'sm:px-6 lg:px-8'}`}
+              >
+                <span className="w-24 shrink-0 font-display text-[1.5rem] leading-none font-semibold tracking-[-0.03em] text-accent sm:w-auto sm:text-[1.9rem]">
+                  <CountUp text={a.figure} />
+                </span>
+                <span className="flex min-w-0 items-center gap-1.5 text-[13.5px] leading-snug text-muted transition-colors group-hover:text-ink">
+                  <span className="line-clamp-2">{a.title}</span>
+                  <ArrowUpRight className="size-3.5 shrink-0 opacity-0 transition-opacity group-hover:opacity-100" aria-hidden="true" />
+                </span>
+              </a>
+            </li>
+          ))}
+        </ul>
+      </m.div>
     </section>
   )
 }

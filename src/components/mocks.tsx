@@ -6,7 +6,7 @@ import { ScaledCanvas } from './ScaledCanvas'
 // Interface previews for projects without a public build. They show the
 // product's real concepts with synthetic values and say so on-screen.
 
-const ACCENT = '#d4f36a'
+const ACCENT = '#c8f560'
 const AMBER = '#f2b84b'
 
 function SyntheticTag({ children = 'Synthetic data · illustrative interface' }: { children?: string }) {
@@ -54,7 +54,7 @@ function GraphNode({ n, index }: { n: NodeT; index: number }) {
       viewport={DRAW_VIEWPORT}
       transition={{ duration: 0.45, ease: EASE, delay: 0.35 + index * 0.05 }}
     >
-      {sel && <circle cx={n.x} cy={n.y} r="22" fill="rgb(212 243 106 / 0.12)" />}
+      {sel && <circle cx={n.x} cy={n.y} r="22" fill="rgb(200 245 96 / 0.12)" />}
       {n.kind === 'person' && <circle cx={n.x} cy={n.y} r={sel ? 11 : 8} fill={sel ? ACCENT : '#26262a'} {...common} />}
       {n.kind === 'phone' && <circle cx={n.x} cy={n.y} r="6" fill="#0f0f11" {...common} />}
       {n.kind === 'account' && <rect x={n.x - 6} y={n.y - 6} width="12" height="12" rx="2" fill="#2a2414" stroke={AMBER} strokeWidth="1.2" />}
@@ -106,7 +106,7 @@ export function NexoraMock() {
             <ul className="mt-3 space-y-2 text-[#d6d6d0]">
               {['FIR records', 'Call-detail records', 'Transactions', 'Intel notes'].map((s, i) => (
                 <li key={s} className="flex items-center gap-2">
-                  <span className={`size-3.5 rounded-[3px] border ${i < 3 ? 'border-[#d4f36a] bg-[#d4f36a]/20' : 'border-white/20'}`} />
+                  <span className={`size-3.5 rounded-[3px] border ${i < 3 ? 'border-[#c8f560] bg-[#c8f560]/20' : 'border-white/20'}`} />
                   {s}
                 </li>
               ))}
@@ -144,7 +144,7 @@ export function NexoraMock() {
             </svg>
             <div className="absolute bottom-3 left-3 flex gap-3 rounded-md border border-white/[0.08] bg-[#0e0e10]/90 px-3 py-2 text-[10.5px] text-[#a8a8a2]">
               <span>2-hop path · P-12 → P-19</span>
-              <span className="text-[#d4f36a]">5 links</span>
+              <span className="text-[#c8f560]">5 links</span>
             </div>
             <div className="absolute right-3 bottom-3">
               <SyntheticTag />
@@ -215,7 +215,7 @@ export function PaimanaMock() {
             <span className="text-[11.5px] text-[#a8a8a2]">Forecast horizon</span>
             <div className="flex rounded-md border border-white/10 p-0.5 font-mono text-[11px]">
               {['1m', '3m', '6m', '12m', '24m'].map((t) => (
-                <span key={t} className={`rounded px-2.5 py-1 ${t === '12m' ? 'bg-[#d4f36a] text-[#0b0b0c]' : 'text-[#a8a8a2]'}`}>
+                <span key={t} className={`rounded px-2.5 py-1 ${t === '12m' ? 'bg-[#c8f560] text-[#0b0b0c]' : 'text-[#a8a8a2]'}`}>
                   {t}
                 </span>
               ))}
@@ -247,7 +247,7 @@ export function PaimanaMock() {
               </p>
               <div className="flex gap-4 text-[11px] text-[#a8a8a2]">
                 <span className="flex items-center gap-1.5"><span className="h-0.5 w-4 bg-[#f2f2ee]" />Observed</span>
-                <span className="flex items-center gap-1.5"><span className="h-0.5 w-4 border-t border-dashed border-[#d4f36a]" />Forecast</span>
+                <span className="flex items-center gap-1.5"><span className="h-0.5 w-4 border-t border-dashed border-[#c8f560]" />Forecast</span>
                 <span className="flex items-center gap-1.5"><span className="h-0.5 w-4 border-t border-dashed border-white/30" />Planned</span>
               </div>
             </div>
@@ -266,7 +266,7 @@ export function PaimanaMock() {
               {/* Observed line draws in, then its points, then the forecast band and line. */}
               <m.polyline points={plan.map((v, i) => `${px(i)},${py(v)}`).join(' ')} fill="none" stroke="rgb(255 255 255 / 0.28)" strokeDasharray="3 4"
                 initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={DRAW_VIEWPORT} transition={{ duration: 0.6, delay: 0.1 }} />
-              <m.polygon points={band} fill="rgb(212 243 106 / 0.12)"
+              <m.polygon points={band} fill="rgb(200 245 96 / 0.12)"
                 initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={DRAW_VIEWPORT} transition={{ duration: 0.7, delay: 1.1 }} />
               <m.polyline points={fc.map((v, k) => `${px(last + k)},${py(v)}`).join(' ')} fill="none" stroke={ACCENT} strokeWidth="2" strokeDasharray="5 4"
                 initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={DRAW_VIEWPORT} transition={{ duration: 0.6, delay: 1.25 }} />
@@ -369,8 +369,8 @@ export function EcoBuddyMock() {
                 <li key={k} className="flex justify-between py-2.5"><span className="text-[#a8a8a2]">{k}</span><span className="font-mono text-[11px]">{v}</span></li>
               ))}
             </ul>
-            <div className="rounded-lg border border-[#d4f36a]/30 bg-[#d4f36a]/[0.06] p-4">
-              <p className="font-mono text-[10.5px] text-[#d4f36a]">EcoBuddy Coach · Gemini</p>
+            <div className="rounded-lg border border-[#c8f560]/30 bg-[#c8f560]/[0.06] p-4">
+              <p className="font-mono text-[10.5px] text-[#c8f560]">EcoBuddy Coach · Gemini</p>
               <p className="mt-2 leading-relaxed text-[#d6d6d0]">Wednesday's commute was your largest source. A no-car day this week would cut roughly a fifth of it.</p>
             </div>
           </div>
@@ -381,8 +381,171 @@ export function EcoBuddyMock() {
   )
 }
 
-export function ProjectMock({ kind }: { kind: 'nexora' | 'paimana' | 'ecobuddy' }) {
+/* ------------------------------------------------------------------ */
+/* Med-AI — pipeline benchmark view                                    */
+/* ------------------------------------------------------------------ */
+
+type KgNode = { id: string; x: number; y: number; label: string; hot?: boolean }
+
+const KG: KgNode[] = [
+  { id: 'q', x: 130, y: 44, label: 'Question', hot: true },
+  { id: 'c', x: 62, y: 118, label: 'Condition C-03', hot: true },
+  { id: 'd', x: 198, y: 128, label: 'Drug D-14', hot: true },
+  { id: 's', x: 40, y: 206, label: 'Symptom S-21' },
+  { id: 'i', x: 136, y: 214, label: 'Interaction I-07', hot: true },
+  { id: 'l', x: 222, y: 216, label: 'Lab L-02' },
+]
+const KG_EDGES: [string, string, boolean?][] = [
+  ['q', 'c', true], ['q', 'd', true], ['d', 'i', true], ['c', 'i', true], ['c', 's'], ['d', 'l'], ['s', 'i'],
+]
+const kgById = Object.fromEntries(KG.map((n) => [n.id, n]))
+
+const PIPELINES = [
+  { name: 'Traditional LLM', path: ['Prompt', 'Model'], tokens: 0.92, score: 0.48 },
+  { name: 'Vector RAG', path: ['Embed', 'Top-k chunks', 'Model'], tokens: 0.7, score: 0.66 },
+  { name: 'GraphRAG', path: ['Entities', 'Graph hops', 'Model'], tokens: 0.38, score: 0.84, best: true },
+]
+
+export function MedAiMock() {
+  return (
+    <ScaledCanvas width={920} height={540}>
+      <div className="flex h-full w-full flex-col bg-[#0e0e10] font-sans text-[12px] text-[#f2f2ee]" aria-hidden="true">
+        <div className="flex h-11 items-center gap-4 border-b border-white/[0.08] px-4">
+          <span className="font-display text-[14px] font-semibold tracking-tight">Med-AI</span>
+          <span className="font-mono text-[11px] text-[#85857f]">Pipeline benchmark · TigerGraph Savanna</span>
+          <div className="ml-auto flex rounded-md border border-white/10 p-0.5 text-[11.5px]">
+            {['Compare', 'Graph', 'Runs'].map((t, i) => (
+              <span key={t} className={`rounded px-2.5 py-1 ${i === 0 ? 'bg-white/10 text-white' : 'text-[#a8a8a2]'}`}>
+                {t}
+              </span>
+            ))}
+          </div>
+        </div>
+
+        <div className="flex min-h-0 flex-1">
+          <div className="flex min-w-0 flex-1 flex-col p-5">
+            <p className="font-mono text-[10px] tracking-wider text-[#85857f] uppercase">Question</p>
+            <div className="mt-2 rounded-md border border-white/10 bg-white/[0.03] px-3.5 py-2.5 text-[12.5px] text-[#d6d6d0]">
+              Which interactions should be checked before prescribing D-14 to a patient with C-03?
+            </div>
+
+            <div className="mt-5 grid flex-1 grid-cols-3 gap-3">
+              {PIPELINES.map((p, k) => (
+                <div
+                  key={p.name}
+                  className={`flex flex-col rounded-lg border p-4 ${
+                    p.best ? 'border-[#c8f560]/40 bg-[#c8f560]/[0.05]' : 'border-white/[0.08] bg-white/[0.02]'
+                  }`}
+                >
+                  <p className={`font-display text-[15px] font-semibold tracking-tight ${p.best ? 'text-[#c8f560]' : ''}`}>{p.name}</p>
+                  <ol className="mt-3 space-y-1.5">
+                    {p.path.map((s, i) => (
+                      <li key={s} className="flex items-center gap-2 text-[11.5px] text-[#d6d6d0]">
+                        <span className="font-mono text-[10px] text-[#85857f]">{i + 1}</span>
+                        {s}
+                      </li>
+                    ))}
+                  </ol>
+                  <div className="mt-auto space-y-3.5 pt-5">
+                    {[
+                      ['Tokens used', p.tokens, AMBER],
+                      ['BERTScore', p.score, 'rgb(255 255 255 / 0.55)'],
+                    ].map(([label, v, color]) => (
+                      <div key={label as string}>
+                        <p className="text-[11px] text-[#a8a8a2]">{label}</p>
+                        <div className="mt-1.5 h-1 rounded-full bg-white/[0.07]">
+                          <m.div
+                            className="h-full origin-left rounded-full"
+                            style={{ width: `${(v as number) * 100}%`, background: p.best ? ACCENT : (color as string) }}
+                            initial={{ scaleX: 0 }}
+                            whileInView={{ scaleX: 1 }}
+                            viewport={DRAW_VIEWPORT}
+                            transition={{ duration: 0.8, ease: EASE, delay: 0.3 + k * 0.15 }}
+                          />
+                        </div>
+                      </div>
+                    ))}
+                    <div className="flex items-center justify-between border-t border-white/[0.06] pt-3 text-[11px]">
+                      <span className="text-[#a8a8a2]">LLM-as-a-Judge</span>
+                      <span className="font-mono text-[10.5px]" style={{ color: p.best ? ACCENT : '#a8a8a2' }}>
+                        {p.best ? 'grounded' : 'review'}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+            <div className="mt-4">
+              <SyntheticTag>Illustrative interface · sample values, not benchmark results</SyntheticTag>
+            </div>
+          </div>
+
+          <aside className="flex w-[290px] shrink-0 flex-col border-l border-white/[0.08] p-4">
+            <p className="font-mono text-[10px] tracking-wider text-[#85857f] uppercase">Retrieved subgraph</p>
+            <div className="dot-grid relative mt-3 min-h-0 flex-1 rounded-md border border-white/[0.08]">
+              <svg viewBox="0 0 260 250" className="absolute inset-0 h-full w-full">
+                {KG_EDGES.map(([a, b, hot], idx) => (
+                  <m.line
+                    key={a + b}
+                    initial={hot ? { opacity: 0 } : { pathLength: 0, opacity: 0 }}
+                    whileInView={hot ? { opacity: 1 } : { pathLength: 1, opacity: 1 }}
+                    viewport={DRAW_VIEWPORT}
+                    transition={{ duration: 0.7, ease: EASE, delay: hot ? 0.9 : idx * 0.06 }}
+                    x1={kgById[a].x}
+                    y1={kgById[a].y}
+                    x2={kgById[b].x}
+                    y2={kgById[b].y}
+                    stroke={hot ? ACCENT : 'rgb(255 255 255 / 0.16)'}
+                    strokeOpacity={hot ? 0.7 : 1}
+                    strokeWidth={hot ? 1.4 : 1}
+                    className={hot ? 'flow-dash' : undefined}
+                  />
+                ))}
+                {KG.map((n, i) => (
+                  <m.g
+                    key={n.id}
+                    initial={{ opacity: 0, scale: 0.6 }}
+                    whileInView={{ opacity: 1, scale: 1 }}
+                    viewport={DRAW_VIEWPORT}
+                    transition={{ duration: 0.45, ease: EASE, delay: 0.3 + i * 0.06 }}
+                  >
+                    <circle
+                      cx={n.x}
+                      cy={n.y}
+                      r={n.id === 'q' ? 9 : 6.5}
+                      fill={n.id === 'q' ? ACCENT : '#26262a'}
+                      stroke={n.hot ? ACCENT : 'rgb(255 255 255 / 0.55)'}
+                      strokeWidth="1.2"
+                    />
+                    <text x={n.x} y={n.y + 21} textAnchor="middle" fontSize="9.5" fill={n.hot ? '#f2f2ee' : '#a8a8a2'} fontFamily="Geist Mono Variable, monospace">
+                      {n.label}
+                    </text>
+                  </m.g>
+                ))}
+              </svg>
+            </div>
+            <dl className="mt-4 divide-y divide-white/[0.06] border-y border-white/[0.06]">
+              {[
+                ['Graph store', 'TigerGraph'],
+                ['Retrieval', 'multi-hop'],
+                ['Evaluation', 'BERTScore · judge'],
+              ].map(([k, v]) => (
+                <div key={k} className="flex justify-between py-2">
+                  <dt className="text-[#a8a8a2]">{k}</dt>
+                  <dd className="font-mono text-[11px]">{v}</dd>
+                </div>
+              ))}
+            </dl>
+          </aside>
+        </div>
+      </div>
+    </ScaledCanvas>
+  )
+}
+
+export function ProjectMock({ kind }: { kind: 'nexora' | 'paimana' | 'ecobuddy' | 'medai' }) {
   if (kind === 'nexora') return <NexoraMock />
   if (kind === 'paimana') return <PaimanaMock />
+  if (kind === 'medai') return <MedAiMock />
   return <EcoBuddyMock />
 }

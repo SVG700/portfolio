@@ -6,12 +6,12 @@ import { Reveal, Stagger, StaggerItem } from '../motion'
 import { SectionLabel } from './SectionLabel'
 import { AnimatedHeading } from './AnimatedHeading'
 
-const nameOf = Object.fromEntries(projects.map((p) => [p.id, p.name]))
+const nameOf = Object.fromEntries(projects.map((p) => [p.id, p.shortName ?? p.name]))
 
 export function Skills() {
   const open = useOpenProject()
   return (
-    <section id="skills" className="border-t border-line bg-bg-alt py-20 md:py-28">
+    <section id="skills" className="border-t border-line bg-bg-alt py-16 md:py-20">
       <div className="container-page">
         <Reveal>
           <SectionLabel index="03">Skills</SectionLabel>

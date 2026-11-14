@@ -1,6 +1,13 @@
 {
   "achievements": [
     {
+      "figure": "3rd",
+      "title": "GraphRAG Inference Hackathon — 3rd Place (Global)",
+      "detail": "TigerGraph · Top 3 of ~190 teams worldwide · $100 prize",
+      "year": "Jul 2026",
+      "project": "medai"
+    },
+    {
       "figure": "INSPIRE",
       "title": "INSPIRE Award",
       "detail": "DST, Govt. of India · ₹10,000 national grant",
@@ -33,6 +40,13 @@
       "detail": "Physics Wallah · Team COREMATES",
       "year": "2026",
       "project": "payperview"
+    },
+    {
+      "figure": "3rd",
+      "title": "Chip to Crop Agritech Hackathon",
+      "detail": "Presidency University × ICAR-IIHR · 24-hour hackathon",
+      "year": "Nov 2026",
+      "project": "agrisense"
     },
     {
       "figure": "7th",

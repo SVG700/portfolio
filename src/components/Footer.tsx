@@ -12,18 +12,18 @@ const HEADLINE = 'Have a problem worth solving? Let’s talk.'
 /** Contact headline revealed letter by letter, once. Words never break mid-way. */
 function LetterHeadline() {
   const allowed = useMotionAllowed()
-  if (!allowed) return <h2 className="display-md mt-5 text-balance">{HEADLINE}</h2>
+  if (!allowed) return <h2 className="display-lg mt-5 text-balance">{HEADLINE}</h2>
   let n = 0
   return (
     <m.h2
-      className="display-md mt-5 text-balance"
+      className="display-lg mt-5 text-balance"
       aria-label={HEADLINE}
       initial="hidden"
       whileInView="shown"
       viewport={VIEW_ONCE}
     >
       {HEADLINE.split(' ').map((word, wi) => (
-        <span key={wi} aria-hidden="true" className="inline-block whitespace-nowrap">
+        <span key={wi} aria-hidden="true" className={`inline-block whitespace-nowrap ${word === 'solving?' ? 'serif-accent' : ''}`}>
           {[...word].map((ch) => {
             const i = n++
             return (
@@ -59,7 +59,7 @@ export function Footer() {
   }
 
   return (
-    <footer id="contact" className="border-t border-line bg-surface" style={{ paddingBottom: 'var(--safe-bottom)' }}>
+    <footer id="contact" className="section-glow border-t border-line bg-surface" style={{ paddingBottom: 'var(--safe-bottom)' }}>
       <div className="container-page py-16 md:py-20">
         <Reveal className="grid gap-10 lg:grid-cols-12 lg:items-end">
           <div className="lg:col-span-7">
@@ -75,7 +75,7 @@ export function Footer() {
                 {/* One-time soft glow once the contact band is in view. */}
                 <m.span
                   aria-hidden="true"
-                  className="pointer-events-none absolute -inset-x-6 -inset-y-4 -z-10 rounded-full bg-[radial-gradient(closest-side,rgb(212_243_106/0.18),transparent)]"
+                  className="pointer-events-none absolute -inset-x-6 -inset-y-4 -z-10 rounded-full bg-[radial-gradient(closest-side,rgb(200_245_96/0.18),transparent)]"
                   initial={{ opacity: 0 }}
                   whileInView={{ opacity: [0, 0.9, 0] }}
                   viewport={VIEW_ONCE}

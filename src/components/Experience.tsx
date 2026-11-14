@@ -10,7 +10,7 @@ import { SectionLabel } from './SectionLabel'
 import { ArrowUpRight } from './icons'
 import { AnimatedHeading } from './AnimatedHeading'
 
-const nameOf = Object.fromEntries(projects.map((p) => [p.id, p.name]))
+const nameOf = Object.fromEntries(projects.map((p) => [p.id, p.shortName ?? p.name]))
 
 // Award figures flip up into place (rotateX) as the list scrolls in. They
 // inherit "hidden"/"show" from the StaggerItem around them. With reduced
@@ -38,14 +38,14 @@ export function Experience() {
   const rail = useSpring(scrollYProgress, { stiffness: 140, damping: 30, restDelta: 0.001 })
 
   return (
-    <section id="experience" className="border-t border-line bg-bg-alt py-20 md:py-28">
+    <section id="experience" className="border-t border-line bg-bg-alt py-16 md:py-20">
       <div className="container-page">
         <Reveal>
           <SectionLabel index="01">Experience & achievements</SectionLabel>
         </Reveal>
         <AnimatedHeading text="Roles and recognition" keyword="recognition" className="display-lg mt-5 text-balance" />
 
-        <div className="mt-12 grid gap-14 lg:grid-cols-12 lg:gap-12">
+        <div className="mt-10 grid gap-12 lg:grid-cols-12 lg:gap-12">
           <div className="lg:col-span-7">
             <h3 className="meta text-muted">Experience & leadership</h3>
             <div ref={timeline} className="relative mt-3">
@@ -90,12 +90,18 @@ export function Experience() {
 
           <div className="lg:col-span-5">
             <h3 className="meta text-muted">Awards & recognition</h3>
-            <Stagger className="mt-3 border-t border-line-strong">
-              {achievements.map((a) => (
-                <StaggerItem key={a.title} className="grid grid-cols-[7.5rem_1fr] gap-4 border-b border-line py-5">
+            {/* Tiles: the first (strongest) result leads at full width. */}
+            <Stagger className="mt-4 grid gap-3 sm:grid-cols-2">
+              {achievements.map((a, i) => (
+                <StaggerItem
+                  key={a.title}
+                  className={`flex flex-col gap-4 rounded-2xl border p-5 transition-colors duration-300 hover:border-accent/30 ${
+                    i === 0 ? 'award-lead border-accent/25 sm:col-span-2 sm:flex-row sm:items-center sm:gap-6 sm:p-6' : 'border-line bg-surface'
+                  }`}
+                >
                   <p
-                    className={`font-display leading-none font-semibold tracking-[-0.03em] text-accent ${
-                      a.figure.length > 7 ? 'pt-1 text-[1.05rem]' : 'text-[1.45rem]'
+                    className={`shrink-0 font-display leading-none font-semibold tracking-[-0.04em] text-accent ${
+                      i === 0 ? 'text-[3.4rem] sm:text-[4.25rem]' : a.figure.length > 7 ? 'text-[1.3rem]' : 'text-[2rem]'
                     }`}
                   >
                     <m.span

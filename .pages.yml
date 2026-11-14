@@ -64,6 +64,7 @@ content:
         fields:
           - { name: id, label: ID (lowercase, unique), type: string, required: true }
           - { name: name, label: Name, type: string, required: true }
+          - { name: shortName, label: Short name for award and skill tags (optional), type: string }
           - { name: category, label: Category, type: string }
           - { name: problem, label: Problem (one line), type: text }
           - { name: summary, label: Summary, type: text }
@@ -101,7 +102,7 @@ content:
               - name: kind
                 label: Mock kind
                 type: select
-                options: { values: [nexora, paimana, ecobuddy] }
+                options: { values: [nexora, paimana, ecobuddy, medai] }
 
   - name: achievements
     label: Achievements

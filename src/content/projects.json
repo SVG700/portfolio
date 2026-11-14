@@ -1,6 +1,36 @@
 {
   "projects": [
     {
+      "id": "medai",
+      "name": "Med-AI — GraphRAG Healthcare Intelligence",
+      "shortName": "Med-AI",
+      "category": "Generative AI · Knowledge graphs",
+      "problem": "LLM answers over dense clinical data can hallucinate and use far more tokens than they need.",
+      "summary": "A GraphRAG-powered healthcare assistant that benchmarks a traditional LLM pipeline, Vector RAG and GraphRAG on TigerGraph Savanna — turning a dense clinical dataset into a knowledge graph to cut hallucinations and token usage. Evaluated with BERTScore and LLM-as-a-Judge. 3rd place globally at TigerGraph’s GraphRAG Inference Hackathon (Jul 2026). Built as a team.",
+      "status": "Prototype",
+      "tier": "featured",
+      "role": "Team Developer",
+      "features": [
+        "Benchmarks a traditional LLM pipeline, Vector RAG and GraphRAG",
+        "Clinical dataset modelled as a knowledge graph on TigerGraph Savanna",
+        "Evaluation with BERTScore and LLM-as-a-Judge"
+      ],
+      "stack": [
+        "Python",
+        "TigerGraph Savanna",
+        "Docker",
+        "RAG"
+      ],
+      "links": {},
+      "notes": [
+        "No public repository or demo yet."
+      ],
+      "visual": {
+        "type": "mock",
+        "kind": "medai"
+      }
+    },
+    {
       "id": "nexora",
       "name": "NEXORA",
       "category": "AI · Graph analytics",
@@ -132,6 +162,30 @@
         "alt": "PayPerView landing page: Decentralized Creator Monetization, live on Algorand Testnet",
         "caption": "ffrg-srgvs.vercel.app"
       }
+    },
+    {
+      "id": "agrisense",
+      "name": "AgriSense — AI Pest Monitoring System",
+      "shortName": "AgriSense",
+      "category": "AI · AgriTech",
+      "problem": "Pest outbreaks are often noticed only after crops are already damaged.",
+      "summary": "An AI-based insect counting and pest monitoring system that uses computer vision (Roboflow) to detect and count insects, helping farmers track pest activity early. Built in 24 hours — 3rd place at the Chip to Crop agritech hackathon (Nov 2026). Built as a team.",
+      "status": "Prototype",
+      "tier": "more",
+      "role": "Team Developer",
+      "features": [
+        "Insect detection and counting with computer vision (Roboflow)",
+        "Pest-activity tracking for early warning"
+      ],
+      "stack": [
+        "Python",
+        "Roboflow",
+        "Computer Vision"
+      ],
+      "links": {},
+      "notes": [
+        "No public repository or demo yet."
+      ]
     },
     {
       "id": "nyayalens",

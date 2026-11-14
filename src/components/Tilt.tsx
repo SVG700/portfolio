@@ -1,5 +1,5 @@
 import { m, useMotionValue, useSpring } from 'framer-motion'
-import type { ReactNode } from 'react'
+import type { MouseEvent, ReactNode } from 'react'
 import { usePointerFx } from '../motion-shared'
 
 const SPRING = { stiffness: 220, damping: 22, mass: 0.5 }
@@ -22,6 +22,8 @@ export function Tilt({
   max?: number
   as?: 'div' | 'article'
   'aria-labelledby'?: string
+  'data-cursor'?: string
+  onClick?: (e: MouseEvent<HTMLElement>) => void
 }) {
   const enabled = usePointerFx()
   const rx = useSpring(useMotionValue(0), SPRING)

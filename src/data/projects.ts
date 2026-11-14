@@ -26,11 +26,13 @@ export type ProjectStatus = 'Live demo' | 'In development' | 'Prototype' | 'Loca
  */
 export type ProjectVisual =
   | { type: 'screenshot'; src: string; alt: string; caption: string }
-  | { type: 'mock'; kind: 'nexora' | 'paimana' | 'ecobuddy' }
+  | { type: 'mock'; kind: 'nexora' | 'paimana' | 'ecobuddy' | 'medai' }
 
 export type Project = {
   id: string
   name: string
+  /** Short label for award and skill tags; falls back to name. */
+  shortName?: string
   category: string
   /** One-line problem statement. */
   problem: string

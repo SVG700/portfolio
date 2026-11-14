@@ -5,7 +5,7 @@ import { AnimatedHeading } from './AnimatedHeading'
 
 export function Education() {
   return (
-    <section id="education" className="py-20 md:py-28">
+    <section id="education" className="py-16 md:py-20">
       <div className="container-page">
         <Reveal>
           <SectionLabel index="04">Education & activities</SectionLabel>

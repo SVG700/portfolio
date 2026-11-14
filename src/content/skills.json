@@ -72,9 +72,29 @@
         },
         {
           "name": "Gemini API"
+        },
+        {
+          "name": "Generative AI"
+        },
+        {
+          "name": "RAG (Retrieval-Augmented Generation)"
+        },
+        {
+          "name": "Knowledge Graphs"
+        },
+        {
+          "name": "TigerGraph"
+        },
+        {
+          "name": "Computer Vision"
+        },
+        {
+          "name": "Roboflow"
         }
       ],
       "evidence": [
+        "medai",
+        "agrisense",
         "paimana",
         "heliohub",
         "ecobuddy"
@@ -127,9 +147,14 @@
         },
         {
           "name": "Canva"
+        },
+        {
+          "name": "Docker"
         }
       ],
-      "evidence": []
+      "evidence": [
+        "medai"
+      ]
     }
   ]
 }

@@ -53,7 +53,7 @@ Optional fields that are empty simply don't render, so there are no blank placeh
 ## Project visuals
 
 - **Screenshots** (`public/work/*.webp`) are real captures of the deployed demos: HelioHub, NyayaLens, PayPerView and StadiumOS (the StadiumOS one comes from the repo's own `screenshots/` folder). To replace one, drop in a new 1280px-wide WebP and keep the filename.
-- **Interface previews** for NEXORA, the forecasting project and EcoBuddy are built in code (`src/components/mocks.tsx`). They use synthetic values and say so on screen. Swap a project to a real screenshot by changing its `visual` in `projects.json` to `{ type: 'screenshot', … }`.
+- **Interface previews** for Med-AI, NEXORA, the forecasting project and EcoBuddy are built in code (`src/components/mocks.tsx`). They use synthetic values and say so on screen. Swap a project to a real screenshot by changing its `visual` in `projects.json` to `{ type: 'screenshot', … }`.
 
 ## Resume
 

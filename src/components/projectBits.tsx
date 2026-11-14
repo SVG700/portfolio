@@ -24,15 +24,18 @@ export function Status({ status }: { status: ProjectStatus }) {
 export function Stack({ items, max }: { items: string[]; max?: number }) {
   const shown = max ? items.slice(0, max) : items
   return (
-    <p className="meta text-muted">
-      {shown.map((s, i) => (
-        <span key={s}>
-          {i > 0 && <span className="text-dim/60"> / </span>}
-          <span className="whitespace-nowrap">{s}</span>
-        </span>
+    <ul className="flex flex-wrap gap-1.5">
+      {shown.map((s) => (
+        <li key={s} className="chip">
+          {s}
+        </li>
       ))}
-      {max && items.length > max && <span className="pl-1.5 text-dim">+{items.length - max}</span>}
-    </p>
+      {max && items.length > max && (
+        <li className="chip border-transparent bg-transparent px-1 text-dim">
+          +{items.length - max}<span className="sr-only"> more</span>
+        </li>
+      )}
+    </ul>
   )
 }
 

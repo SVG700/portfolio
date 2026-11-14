@@ -4,6 +4,7 @@ import type { Project } from '../data/projects'
 import { Decode } from './Decode'
 import { ProjectActions, ProjectVisual, Stack, Status } from './projectBits'
 import { Depth, Tilt } from './Tilt'
+import { useOpenProject } from '../drawer'
 
 /**
  * Desktop scroll story for a featured project: the preview stays pinned
@@ -46,6 +47,7 @@ function Step({
 
 export function FeatureStory({ p, flip }: { p: Project; flip: boolean }) {
   const [active, setActive] = useState(0)
+  const open = useOpenProject()
   const steps = [
     { label: 'Problem', body: <p className="text-[1.15rem] leading-snug text-ink">{p.problem}</p> },
     {
@@ -107,7 +109,7 @@ export function FeatureStory({ p, flip }: { p: Project; flip: boolean }) {
       </div>
       <div className="col-span-7">
         <div className="sticky top-[calc(5rem+var(--safe-top))] py-6">
-          <Tilt max={5} className="sheen rounded-[10px]">
+          <Tilt max={5} className="sheen glow-border relative cursor-pointer rounded-[10px]" data-cursor="View" onClick={() => open(p.id)}>
             <Depth z={18}>
               <ProjectVisual project={p} />
             </Depth>
